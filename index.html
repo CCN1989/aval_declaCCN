@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>Avaliação – Declamação</title>
 
 <style>
@@ -16,6 +16,7 @@ textarea{width:100%;height:60px}
 .notaFinal{font-size:20px;font-weight:bold;text-align:center}
 .btns{text-align:right;padding:10px}
 button{padding:10px 25px;font-size:16px;font-weight:bold}
+select,input{width:100%}
 </style>
 </head>
 
@@ -27,7 +28,7 @@ button{padding:10px 25px;font-size:16px;font-weight:bold}
 <img src="https://raw.githubusercontent.com/CCN1989/Imagens/refs/heads/main/Logo%20pequeno.png" height="70">
 <div style="text-align:center">
 <strong>MTG – MOVIMENTO TRADICIONALISTA GAÚCHO</strong><br>
-2º Chama´s da Poesia – CTG Chama Nativa – 12ª RT<br>
+2º Chamas da Poesia – CTG Chama Nativa – 12ª RT<br>
 (28/02/26 e 01/03/26)<br>
 <strong>Planilha de Avaliação – Declamação</strong>
 </div>
@@ -36,8 +37,8 @@ button{padding:10px 25px;font-size:16px;font-weight:bold}
 
 <!-- SELEÇÃO -->
 <div style="padding:8px;background:#ffe066;border-bottom:2px solid #000">
-<select id="codCandidato" onchange="carregarCandidato()">
-<option value="">Selecione o código do concorrente</option>
+<select id="codCandidato">
+<option value="">Selecione o candidato *</option>
 </select>
 </div>
 
@@ -55,37 +56,37 @@ button{padding:10px 25px;font-size:16px;font-weight:bold}
 
 <div class="box">
 <h3>Fundamento da Voz (3,0)</h3>
-Imposição <input id="voz1" type="number" step="0.1" oninput="calc()"><br>
-Dicção <input id="voz2" type="number" step="0.1" oninput="calc()"><br>
-Inflexão <input id="voz3" type="number" step="0.1" oninput="calc()"><br>
-Descontos: <b id="descVoz">0,00</b><br>
-Nota: <b id="notaVoz">3,00</b>
+Imposição <input id="voz1" type="number" step="0.1" oninput="calc()">
+Dicção <input id="voz2" type="number" step="0.1" oninput="calc()">
+Inflexão <input id="voz3" type="number" step="0.1" oninput="calc()">
+Descontos: <b id="descVoz">0,0</b><br>
+Nota: <b id="notaVoz">3,0</b>
 <textarea id="obsVoz"></textarea>
 </div>
 
 <div class="box">
 <h3>Expressão Corporal (2,0)</h3>
-Facial <input id="exp1" type="number" step="0.1" oninput="calc()"><br>
-Gestual <input id="exp2" type="number" step="0.1" oninput="calc()"><br>
-Postura <input id="exp3" type="number" step="0.1" oninput="calc()"><br>
-Descontos: <b id="descExp">0,00</b><br>
-Nota: <b id="notaExp">2,00</b>
+Facial <input id="exp1" type="number" step="0.1" oninput="calc()">
+Gestual <input id="exp2" type="number" step="0.1" oninput="calc()">
+Postura <input id="exp3" type="number" step="0.1" oninput="calc()">
+Descontos: <b id="descExp">0,0</b><br>
+Nota: <b id="notaExp">2,0</b>
 <textarea id="obsExp"></textarea>
 </div>
 
 <div class="box">
-<h3>Interpretação (4,0)</h3>
-Nota: <input id="notaInter" type="number" step="0.1" oninput="calc()">
+<h3>Interpretação (4,0) *</h3>
+<input id="notaInter" type="number" step="0.1" min="0" max="4" oninput="calc()">
 <textarea id="obsInter"></textarea>
 </div>
 
 <div class="box">
 <h3>Fidelidade ao Texto (1,0)</h3>
-Letra <input id="fid1" type="number" step="0.1" oninput="calc()"><br>
-Verso <input id="fid2" type="number" step="0.1" oninput="calc()"><br>
-Esqueceu <input id="fid3" type="number" step="0.1" oninput="calc()"><br>
-Descontos: <b id="descFid">0,00</b><br>
-Nota: <b id="notaFid">1,00</b>
+Letra <input id="fid1" type="number" step="0.1" oninput="calc()">
+Verso <input id="fid2" type="number" step="0.1" oninput="calc()">
+Esqueceu <input id="fid3" type="number" step="0.1" oninput="calc()">
+Descontos: <b id="descFid">0,0</b><br>
+Nota: <b id="notaFid">1,0</b>
 <textarea id="obsFid"></textarea>
 </div>
 
@@ -96,15 +97,15 @@ Nota: <b id="notaFid">1,00</b>
 <div class="box">Tempo <input id="descTempo" type="number" step="0.1" oninput="calc()"></div>
 <div class="box">Indumentária <input id="descInd" type="number" step="0.1" oninput="calc()"></div>
 <div class="box">Observações<textarea id="obsGeral"></textarea></div>
-<div class="box notaFinal">Nota Final<br><span id="notaFinal">10,00</span></div>
+<div class="box notaFinal">Nota Final<br><span id="notaFinal">6,00</span></div>
 </div>
 
 <!-- RODAPÉ -->
 <div class="rodape">
 <div>Data/Hora<br><span id="data"></span></div>
-<div>Avaliador<br>
+<div>Avaliador *<br>
 <select id="avaliador">
-<option value="">Selecione o avaliador</option>
+<option value="">Selecione *</option>
 </select>
 </div>
 </div>
@@ -116,10 +117,11 @@ Nota: <b id="notaFid">1,00</b>
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbzPvajQldRpnjwTYfhUpyCrREX0KOYiHG6xOO6u71Jt3zr7ieO1ZRPEYyEDcwFWhnhk/exec";
+const URL = "COLE_AQUI_A_URL_DO_WEBAPP";
+
 let candidatos=[], avaliadores=[];
 
-/* ===== CARREGA CANDIDATOS ===== */
+/* LOAD CANDIDATOS */
 fetch(URL+"?acao=candidatos").then(r=>r.json()).then(d=>{
   candidatos=d;
   d.forEach(c=>{
@@ -127,15 +129,15 @@ fetch(URL+"?acao=candidatos").then(r=>r.json()).then(d=>{
   });
 });
 
-/* ===== CARREGA AVALIADORES ===== */
+/* LOAD AVALIADORES */
 fetch(URL+"?acao=avaliadores").then(r=>r.json()).then(d=>{
   avaliadores=d;
   d.forEach(a=>{
-    avaliador.innerHTML+=`<option value="${a.nome}">${a.nome}</option>`;
+    avaliador.innerHTML+=`<option value="${a.id}">${a.id} - ${a.nome}</option>`;
   });
 });
 
-function carregarCandidato(){
+codCandidato.onchange=()=>{
   const c=candidatos.find(x=>x.codigo==codCandidato.value);
   if(!c)return;
   concorrente.innerText=c.concorrente;
@@ -143,7 +145,7 @@ function carregarCandidato(){
   entidade.innerText=c.entidade;
   municipio.innerText=c.municipio;
   rt.innerText=c.rt;
-}
+};
 
 function v(id){return parseFloat(document.getElementById(id).value)||0}
 
@@ -151,28 +153,34 @@ function calc(){
   let dv=v('voz1')+v('voz2')+v('voz3');
   let de=v('exp1')+v('exp2')+v('exp3');
   let df=v('fid1')+v('fid2')+v('fid3');
-
-  descVoz.innerText=dv.toFixed(2);
-  descExp.innerText=de.toFixed(2);
-  descFid.innerText=df.toFixed(2);
-
-  let nv=Math.max(0,3-dv);
-  let ne=Math.max(0,2-de);
-  let nf=Math.max(0,1-df);
-  let ni=v('notaInter');
-
-  notaVoz.innerText=nv.toFixed(2);
-  notaExp.innerText=ne.toFixed(2);
-  notaFid.innerText=nf.toFixed(2);
-
-  let final=nv+ne+ni+nf-(v('descTempo')+v('descInd'));
+  descVoz.innerText=dv.toFixed(1);
+  descExp.innerText=de.toFixed(1);
+  descFid.innerText=df.toFixed(1);
+  notaVoz.innerText=(3-dv).toFixed(2);
+  notaExp.innerText=(2-de).toFixed(2);
+  notaFid.innerText=(1-df).toFixed(2);
+  let final=6+v('notaInter')-(dv+de+df+v('descTempo')+v('descInd'));
   notaFinal.innerText=final.toFixed(2);
   data.innerText=new Date().toLocaleString();
 }
 
+function limpar(){
+  document.querySelectorAll("input,textarea").forEach(e=>e.value="");
+  document.querySelectorAll("b").forEach(e=>e.innerText="");
+  codCandidato.value="";
+  avaliador.value="";
+  notaFinal.innerText="6,00";
+}
+
 function salvar(){
+  if(!codCandidato.value || !avaliador.value || !notaInter.value){
+    alert("Preencha candidato, avaliador e interpretação.");
+    return;
+  }
+
   fetch(URL,{
     method:"POST",
+    headers:{"Content-Type":"application/json"},
     body:JSON.stringify({
       cod:codCandidato.value,
       concorrente:concorrente.innerText,
@@ -183,7 +191,7 @@ function salvar(){
       obsvoz:obsVoz.value,
       fexp:notaExp.innerText,
       obsexp:obsExp.value,
-      inter:v('notaInter'),
+      inter:notaInter.value,
       obsinter:obsInter.value,
       fide:notaFid.innerText,
       obsfide:obsFid.value,
@@ -194,7 +202,13 @@ function salvar(){
       avaliador:avaliador.value,
       data:new Date().toLocaleString()
     })
-  }).then(()=>alert("Avaliação salva e PDF gerado!"));
+  })
+  .then(r=>r.text())
+  .then(()=>{
+    alert("Avaliação gravada com sucesso ✔");
+    limpar();
+  })
+  .catch(()=>alert("Erro ao gravar avaliação"));
 }
 </script>
 
