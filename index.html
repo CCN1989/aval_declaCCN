@@ -25,11 +25,29 @@
 <body>
 <div class="container">
 
-<div class="header">
-MTG – MOVIMENTO TRADICIONALISTA GAÚCHO<br>
-2º Chama's da Poesia – CTG Chama Nativa – 12ª RT (28/02/26 e 01/03/26)<br>
-Planilha de Avaliação – Declamação
+<div class="header" style="display:grid;grid-template-columns:100px 1fr 100px;align-items:center;gap:10px">
+
+  <!-- LOGO ESQUERDA -->
+  <div style="text-align:left">
+    <img src="https://raw.githubusercontent.com/CCN1989/Imagens/refs/heads/main/Logo%20pequeno.png"
+         style="max-height:80px">
+  </div>
+
+  <!-- TEXTO CENTRAL -->
+  <div style="text-align:center">
+    MTG – MOVIMENTO TRADICIONALISTA GAÚCHO<br>
+    24º Rodeio Nativista de Esteio – CTG Chama Nativa – 12ª RT<br>
+    <strong>Planilha de Avaliação – Declamação</strong>
+  </div>
+
+  <!-- LOGO DIREITA -->
+  <div style="text-align:right">
+    <img src="https://github.com/CCN1989/Imagens/blob/main/12RT.png?raw=true"
+         style="max-height:80px">
+  </div>
+
 </div>
+
 
 <div style="padding:10px;background:#ffe066;border-bottom:2px solid #000">
 <select id="codCandidato" onchange="carregarCandidato()">
@@ -184,5 +202,6 @@ function salvar(){
 
 </body>
 </html>
+
 
 
