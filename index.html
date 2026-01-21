@@ -223,44 +223,91 @@ function calc(){
 /* ===== SALVAR ===== */
 function salvar(){
 
-  if(!codCandidato.value){
+  /* ===== VALIDAÇÕES ===== */
+  if (!codCandidato.value) {
     alert("Selecione o candidato");
     return;
   }
-  if(!avaliador.value){
+
+  if (!avaliador.value) {
     alert("Selecione o avaliador");
     return;
   }
 
-  fetch(URL,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({
-      cod: codCandidato.value,
-      concorrente: concorrente.textContent,
-      categoria: categoria.textContent,
-      entidade: entidade.textContent,
-      municipio: municipio.textContent,
-      notafinal: notaFinal.textContent,
-      avaliador: avaliador.value,
-      data: new Date().toLocaleString()
-    })
+  if (!notaInter.value) {
+    alert("Informe a nota de Interpretação");
+    return;
+  }
+
+  const dados = {
+    cod: codCandidato.value,
+    categoria: categoria.textContent,
+    concorrente: concorrente.textContent,
+    entidade: entidade.textContent,
+    municipio: municipio.textContent,
+    rt: rt.textContent,
+    poema: document.getElementById("poema")?.value || "",
+
+    /* NOTAS */
+    notaFundamento: notaVoz.textContent,
+    obsFundamento: obsVoz.value,
+
+    notaExpressao: notaExp.textContent,
+    obsExpressao: obsExp.value,
+
+    notaInter: notaInter.value,
+    obsInter: obsInter.value,
+
+    notaFidelidade: notaFid.textContent,
+
+    /* DESCONTOS */
+    descTempo: descTempo.value || 0,
+    descInd: descInd.value || 0,
+
+    obsGeral: obsGeral.value,
+    notaFinal: notaFinal.textContent,
+    avaliador: avaliador.value,
+    data: new Date().toLocaleString()
+  };
+
+  fetch(URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados)
   })
-  .then(r=>r.json())
-  .then(r=>{
-    if(r.status==="OK"){
-      alert("Avaliação gravada com sucesso");
-      location.reload();
+  .then(r => r.json())
+  .then(resp => {
+    if (resp.status === "OK") {
+      alert("Avaliação gravada com sucesso ✅");
+
+      /* ===== LIMPA FORMULÁRIO ===== */
+      document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+      document.querySelectorAll("b, span").forEach(el => {
+        if (el.id !== "notaFinal") el.textContent = "";
+      });
+
+      notaVoz.textContent = "3,0";
+      notaExp.textContent = "2,0";
+      notaFid.textContent = "1,0";
+      notaFinal.textContent = "6,00";
+
+      codCandidato.value = "";
+      avaliador.value = "";
+
     } else {
-      alert("Erro: "+r.msg);
+      alert("Erro ao salvar: " + resp.msg);
     }
   })
-  .catch(()=>alert("Erro de comunicação"));
+  .catch(err => {
+    console.error(err);
+    alert("Erro de comunicação com o servidor");
+  });
 }
 </script>
 
 </body>
 </html>
+
 
 
 
