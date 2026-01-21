@@ -37,7 +37,7 @@ select,input{width:100%}
 
 <!-- SELEÇÃO -->
 <div style="padding:8px;background:#ffe066;border-bottom:2px solid #000">
-<select id="codCandidato">
+<select id="codCandidato" onchange="carregarCandidato()">
 <option value="">Selecione o candidato *</option>
 </select>
 </div>
@@ -121,89 +121,100 @@ const URL = "https://script.google.com/macros/s/AKfycbzVa98kKm2c_GTSylAxnuF4_YcY
 
 let candidatos = [];
 
-/* =====================
-   CARREGA CANDIDATOS
-===================== */
+/* ===== CARREGAR CANDIDATOS ===== */
 fetch(URL + "?acao=candidatos")
-  .then(r => r.json())
-  .then(lista => {
-    candidatos = lista;
-    lista.forEach(c => {
-      codCandidato.innerHTML +=
-        `<option value="${c.codigo}">${c.codigo}</option>`;
-    });
-  })
-  .catch(() => alert("Erro ao carregar candidatos"));
+.then(r => r.json())
+.then(lista => {
+  candidatos = lista;
+  lista.forEach(c => {
+    codCandidato.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`;
+  });
+});
 
-/* =====================
-   CARREGA AVALIADORES
-===================== */
+/* ===== CARREGAR AVALIADORES ===== */
 fetch(URL + "?acao=avaliadores")
-  .then(r => r.json())
-  .then(lista => {
-    lista.forEach(a => {
-      avaliador.innerHTML +=
-        `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
-    });
-  })
-  .catch(() => alert("Erro ao carregar avaliadores"));
+.then(r => r.json())
+.then(lista => {
+  lista.forEach(a => {
+    avaliador.innerHTML += `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
+  });
+});
 
+/* ===== PREENCHER CANDIDATO ===== */
 function carregarCandidato(){
-  const c = candidatos.find(x => x.codigo == codCandidato.value);
-  if (!c) return;
+  const codigo = String(codCandidato.value).trim();
+  const c = candidatos.find(x => String(x.codigo).trim() === codigo);
+  if(!c) return;
 
-  concorrente.innerText = c.concorrente;
-  categoria.innerText   = c.categoria;
-  entidade.innerText    = c.entidade;
-  municipio.innerText   = c.municipio;
-  rt.innerText          = c.rt;
+  concorrente.textContent = c.concorrente;
+  categoria.textContent   = c.categoria;
+  entidade.textContent    = c.entidade;
+  municipio.textContent   = c.municipio;
+  rt.textContent          = c.rt;
 }
 
-/* =====================
-   SALVAR
-===================== */
+/* ===== CÁLCULO ===== */
+function v(id){
+  const el = document.getElementById(id);
+  return el && el.value !== "" ? parseFloat(el.value) : 0;
+}
+
+function calc(){
+  const dv = v('voz1') + v('voz2') + v('voz3');
+  const de = v('exp1') + v('exp2') + v('exp3');
+  const df = v('fid1') + v('fid2') + v('fid3');
+
+  descVoz.textContent = dv.toFixed(1);
+  descExp.textContent = de.toFixed(1);
+  descFid.textContent = df.toFixed(1);
+
+  notaVoz.textContent = (3 - dv).toFixed(2);
+  notaExp.textContent = (2 - de).toFixed(2);
+  notaFid.textContent = (1 - df).toFixed(2);
+
+  const final = 6 + v('notaInter') - (dv + de + df + v('descTempo') + v('descInd'));
+  notaFinal.textContent = final.toFixed(2);
+  data.textContent = new Date().toLocaleString();
+}
+
+/* ===== SALVAR ===== */
 function salvar(){
 
-  if (!codCandidato.value) {
+  if(!codCandidato.value){
     alert("Selecione o candidato");
     return;
   }
-
-  if (!avaliador.value) {
+  if(!avaliador.value){
     alert("Selecione o avaliador");
     return;
   }
 
-  const dados = {
-    cod: codCandidato.value,
-    concorrente: concorrente.innerText,
-    categoria: categoria.innerText,
-    entidade: entidade.innerText,
-    municipio: municipio.innerText,
-    notafinal: notaFinal.innerText,
-    avaliador: avaliador.value,
-    data: new Date().toLocaleString()
-  };
-
-  fetch(URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dados)
+  fetch(URL,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({
+      cod: codCandidato.value,
+      concorrente: concorrente.textContent,
+      categoria: categoria.textContent,
+      entidade: entidade.textContent,
+      municipio: municipio.textContent,
+      notafinal: notaFinal.textContent,
+      avaliador: avaliador.value,
+      data: new Date().toLocaleString()
+    })
   })
-  .then(r => r.json())
-  .then(resp => {
-    if (resp.status === "OK") {
+  .then(r=>r.json())
+  .then(r=>{
+    if(r.status==="OK"){
       alert("Avaliação gravada com sucesso");
       location.reload();
     } else {
-      alert("Erro: " + resp.msg);
+      alert("Erro: "+r.msg);
     }
   })
-  .catch(() => alert("Falha ao comunicar com o servidor"));
+  .catch(()=>alert("Erro de comunicação"));
 }
 </script>
-
-
 
 </body>
 </html>
