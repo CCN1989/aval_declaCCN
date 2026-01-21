@@ -1,231 +1,187 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Avaliação – Chamas da Poesia 2026</title>
-
+<meta charset="UTF-8" />
+<title>Avaliação – Declamação</title>
 <style>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  margin: 20px;
-}
-
-.box {
-  border: 1px solid #000;
-  padding: 8px;
-  margin-bottom: 10px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-top: 4px;
-}
-
-input, textarea, select {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.total {
-  font-weight: bold;
-  margin-top: 6px;
-}
-
-.nota-final {
-  font-size: 22px;
-  font-weight: bold;
-  text-align: center;
-  border: 2px solid #000;
-  padding: 10px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
+  body{font-family:Arial, Helvetica, sans-serif;background:#f2f2f2;margin:0;padding:10px}
+  .container{max-width:1200px;margin:auto;background:#fff;border:2px solid #000}
+  .header{background:#ffe066;border-bottom:2px solid #000;padding:10px;text-align:center;font-weight:bold}
+  .linha{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:5px;padding:5px;background:#ffe066;border-bottom:2px solid #000}
+  .campo{font-size:13px}
+  .campo span{font-weight:bold}
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;padding:5px}
+  .box{border:2px solid #000;background:#ffe066;padding:5px;font-size:13px}
+  .box h3{text-align:center;margin:0 0 5px 0;font-size:14px}
+  .box input{width:60px}
+  textarea{width:100%;height:60px}
+  .rodape{display:grid;grid-template-columns:2fr 1fr 1fr;padding:5px;background:#ffe066;border-top:2px solid #000}
+  .btns{text-align:right;padding:10px}
+  button{padding:10px 20px;font-size:16px;font-weight:bold}
+  .notaFinal{font-size:18px;font-weight:bold;text-align:center}
 </style>
 </head>
 
 <body>
+<div class="container">
 
-<!-- CABEÇALHO -->
-<div style="display:flex; align-items:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:15px;">
-  <div style="width:90px;">
-    <img src="https://raw.githubusercontent.com/CCN1989/Imagens/refs/heads/main/Logo%20pequeno.png" style="max-width:80px;">
-  </div>
-
-  <div style="flex:1; text-align:center; line-height:1.4;">
-    <strong>MTG – Movimento Tradicionalista Gaúcho</strong><br>
-    <strong>2º Chamas da Poesia – CTG Chama Nativa</strong><br>
-    <strong>12ª Região Tradicionalista</strong><br>
-    (28/02/26 e 01/03/26)<br>
-    <strong>Planilha Avaliação Declamação "Prendas e Peões"</strong>
-  </div>
-
-  <div style="width:90px; text-align:right;">
-    <img src="https://github.com/CCN1989/Imagens/blob/main/12RT.png?raw=true" style="max-width:80px;">
-  </div>
+<div class="header">
+MTG – MOVIMENTO TRADICIONALISTA GAÚCHO<br>
+24º Rodeio Nativista de Esteio – CTG Chama Nativa – 12ª RT<br>
+Planilha de Avaliação – Declamação
 </div>
 
-<!-- DADOS INICIAIS -->
-<div class="box">
-  <label>Código do Candidato</label>
-  <select id="cod">
-    <option value="">Selecione</option>
-  </select>
-
-  <label>Concorrente</label>
-  <input id="concorrente">
-
-  <label>Categoria</label>
-  <input id="categoria">
-
-  <label>Entidade</label>
-  <input id="entidade">
-
-  <label>Município</label>
-  <input id="municipio">
-</div>
-
-<!-- QUADRANTES -->
-<div class="grid">
-
-<!-- Q1 -->
-<div class="box">
-<strong>Fundamento da Voz (3,0)</strong>
-<label>Imposição (até 0,5)</label>
-<input id="voz_imposicao" type="number" step="0.01" oninput="calcularNotaFinal()">
-<label>Dicção (até 0,5)</label>
-<input id="voz_diccao" type="number" step="0.01" oninput="calcularNotaFinal()">
-<label>Inflexão (até 0,5)</label>
-<input id="voz_inflexao" type="number" step="0.01" oninput="calcularNotaFinal()">
-<div class="total">Descontos Q1: <span id="descQ1">0.00</span></div>
-<textarea id="obsvoz" placeholder="Observações"></textarea>
-</div>
-
-<!-- Q2 -->
-<div class="box">
-<strong>Expressão Corporal (2,0)</strong>
-<label>Facial (até 0,3)</label>
-<input id="exp_facial" type="number" step="0.01" oninput="calcularNotaFinal()">
-<label>Gestual (até 0,3)</label>
-<input id="exp_gestual" type="number" step="0.01" oninput="calcularNotaFinal()">
-<label>Postura Cênica (até 0,4)</label>
-<input id="exp_postura" type="number" step="0.01" oninput="calcularNotaFinal()">
-<div class="total">Descontos Q2: <span id="descQ2">0.00</span></div>
-<textarea id="obsexp" placeholder="Observações"></textarea>
-</div>
-
-<!-- Q3 -->
-<div class="box">
-<strong>Interpretação da Mensagem (4,0)</strong>
-<label>Nota (0,0 à 4,0)</label>
-<input id="notaInter" type="number" step="0.01" min="0" max="4" oninput="calcularNotaFinal()">
-<textarea id="obsinter" placeholder="Observações"></textarea>
-</div>
-
-<!-- Q4 -->
-<div class="box">
-<strong>Fidelidade ao Texto (1,0)</strong>
-<label>Letra / Palavra (até 0,2)</label>
-<input id="fid_letra" type="number" step="0.01" oninput="calcularNotaFinal()">
-<label>Verso / Estrofe (até 0,4)</label>
-<input id="fid_verso" type="number" step="0.01" oninput="calcularNotaFinal()">
-<label>Esqueceu / Lembrando (até 0,4)</label>
-<input id="fid_esqueceu" type="number" step="0.01" oninput="calcularNotaFinal()">
-<div class="total">Descontos Q4: <span id="descQ4">0.00</span></div>
-<textarea id="obsfide" placeholder="Observações"></textarea>
-</div>
-
-</div>
-
-<!-- POEMA / TEMPO -->
-<div class="box">
-<label>Poema</label>
-<textarea id="poema"></textarea>
-
-<label>Tempo</label>
-<input id="tempo">
-</div>
-
-<!-- DESCONTOS GERAIS -->
-<div class="box">
-<label>Desconto Tempo</label>
-<input id="descTempo" type="number" step="0.01" oninput="calcularNotaFinal()">
-
-<label>Desconto Indumentária</label>
-<input id="descInd" type="number" step="0.01" oninput="calcularNotaFinal()">
-</div>
-
-<!-- OBS GERAL -->
-<div class="box">
-<label>Observações Gerais</label>
-<textarea id="obsgeral"></textarea>
-</div>
-
-<!-- RESULTADO -->
-<div class="box">
-<strong>Total de Descontos:</strong>
-<span id="totalDescontos">0.00</span>
-</div>
-
-<div class="nota-final">
-NOTA FINAL: <span id="notaFinal">6.00</span>
-</div>
-
-<!-- AVALIADOR -->
-<div class="box">
-<label>Avaliador</label>
-<select id="avaliador">
-  <option value="">Selecione</option>
-  <option value="AV1">AV1</option>
-  <option value="AV2">AV2</option>
-  <option value="AV3">AV3</option>
+<div style="padding:10px;background:#ffe066;border-bottom:2px solid #000">
+<select id="codCandidato" onchange="carregarCandidato()">
+<option value="">Selecione o código do concorrente</option>
 </select>
 </div>
 
+<div class="linha">
+<div class="campo">Concorrente:<br><span id="concorrente"></span></div>
+<div class="campo">Categoria:<br><span id="categoria"></span></div>
+<div class="campo">Entidade:<br><span id="entidade"></span></div>
+<div class="campo">Município:<br><span id="municipio"></span></div>
+<div class="campo">RT:<br><span id="rt"></span></div>
+</div>
+
+<div class="grid">
+
+<div class="box">
+<h3>Fundamento da Voz (3,0)</h3>
+Imposição (0,5) <input type="number" step="0.1" id="voz1" oninput="calc()"><br>
+Dicção (0,5) <input type="number" step="0.1" id="voz2" oninput="calc()"><br>
+Inflexão (0,5) <input type="number" step="0.1" id="voz3" oninput="calc()"><br>
+Total descontos: <span id="descVoz">0,0</span><br>
+Nota: <span id="notaVoz">3,0</span>
+<textarea id="obsVoz" placeholder="Observações"></textarea>
+</div>
+
+<div class="box">
+<h3>Expressão Corporal (2,0)</h3>
+Facial (0,3) <input type="number" step="0.1" id="exp1" oninput="calc()"><br>
+Gestual (0,3) <input type="number" step="0.1" id="exp2" oninput="calc()"><br>
+Postura Cênica (0,4) <input type="number" step="0.1" id="exp3" oninput="calc()"><br>
+Total descontos: <span id="descExp">0,0</span><br>
+Nota: <span id="notaExp">2,0</span>
+<textarea id="obsExp"></textarea>
+</div>
+
+<div class="box">
+<h3>Interpretação da Mensagem (4,0)</h3>
+<input type="number" step="0.1" id="notaInter" oninput="calc()"><br>
+Excelente (3,6 a 4,0)<br>
+Bom (3,1 a 3,5)<br>
+Regular (2,6 a 3,0)<br>
+Suficiente (2,1 a 2,5)<br>
+Não terminou (0,0 a 2,0)
+<textarea id="obsInter"></textarea>
+</div>
+
+<div class="box">
+<h3>Fidelidade ao Texto (1,0)</h3>
+Letra/Palavra (0,2) <input type="number" step="0.1" id="fid1" oninput="calc()"><br>
+Verso/Estrofe (0,4) <input type="number" step="0.1" id="fid2" oninput="calc()"><br>
+Esqueceu (0,4) <input type="number" step="0.1" id="fid3" oninput="calc()"><br>
+Total descontos: <span id="descFid">0,0</span><br>
+Nota: <span id="notaFid">1,0</span>
+<textarea id="obsFid"></textarea>
+</div>
+
+</div>
+
+<div class="grid">
+<div class="box">Poema:<textarea id="poema"></textarea></div>
+<div class="box">Tempo:<textarea id="tempo"></textarea></div>
+<div class="box">
+<h3>Descontos</h3>
+Tempo (1,0/min) <input type="number" step="0.1" id="descTempo" oninput="calc()"><br>
+Indumentária (2,0) <input type="number" step="0.1" id="descInd" oninput="calc()">
+</div>
+<div class="box">Observações Gerais<textarea id="obsGeral"></textarea></div>
+</div>
+
+<div class="rodape">
+<div>Data/Hora: <span id="data"></span></div>
+<div>Avaliador:<br><select id="avaliador"></select></div>
+<div class="notaFinal">Nota Final<br><span id="notaFinal">6,00</span></div>
+</div>
+
+<div class="btns">
 <button onclick="salvar()">SALVAR</button>
+</div>
+
+</div>
 
 <script>
-function v(id){
-  return parseFloat(document.getElementById(id)?.value) || 0;
-}
+const URL = "COLE_AQUI_URL_APPS_SCRIPT";
+let candidatos=[], avaliadores=[];
 
-function calcularNotaFinal(){
+function v(id){ return parseFloat(document.getElementById(id).value) || 0 }
+
+function calc(){
+  // Descontos por quadrante
+  let dv = v('voz1') + v('voz2') + v('voz3');
+  let de = v('exp1') + v('exp2') + v('exp3');
+  let df = v('fid1') + v('fid2') + v('fid3');
+
+  descVoz.innerText = dv.toFixed(1);
+  descExp.innerText = de.toFixed(1);
+  descFid.innerText = df.toFixed(1);
+
+  // Notas visuais dos quadrantes
+  notaVoz.innerText = (3 - dv).toFixed(2);
+  notaExp.innerText = (2 - de).toFixed(2);
+  notaFid.innerText = (1 - df).toFixed(2);
+
+  // Nota final correta
   let base = 6.0;
   let interpretacao = v('notaInter');
+  let descontosGerais = v('descTempo') + v('descInd');
 
-  let descQ1 = v('voz_imposicao') + v('voz_diccao') + v('voz_inflexao');
-  let descQ2 = v('exp_facial') + v('exp_gestual') + v('exp_postura');
-  let descQ4 = v('fid_letra') + v('fid_verso') + v('fid_esqueceu');
+  let totalDescontos = dv + de + df + descontosGerais;
+  let final = base + interpretacao - totalDescontos;
 
-  let descTempo = v('descTempo');
-  let descInd = v('descInd');
+  notaFinal.innerText = final.toFixed(2);
+  data.innerText = new Date().toLocaleString();
+}
 
-  let totalDescontos = descQ1 + descQ2 + descQ4 + descTempo + descInd;
-  let notaFinal = base + interpretacao - totalDescontos;
+function salvar(){
+  if(!codCandidato.value || !notaInter.value || !avaliador.value){
+    alert('Campos obrigatórios não preenchidos');
+    return;
+  }
 
-  document.getElementById('descQ1').innerText = descQ1.toFixed(2);
-  document.getElementById('descQ2').innerText = descQ2.toFixed(2);
-  document.getElementById('descQ4').innerText = descQ4.toFixed(2);
-  document.getElementById('totalDescontos').innerText = totalDescontos.toFixed(2);
-  document.getElementById('notaFinal').innerText = notaFinal.toFixed(2);
+  fetch(URL,{
+    method:'POST',
+    body:JSON.stringify({
+      cod:codCandidato.value,
+      concorrente:concorrente.innerText,
+      categoria:categoria.innerText,
+      entidade:entidade.innerText,
+      municipio:municipio.innerText,
+      fvoz:notaVoz.innerText,
+      obsvoz:obsVoz.value,
+      fexp:notaExp.innerText,
+      obsexp:obsExp.value,
+      inter:v('notaInter'),
+      obsinter:obsInter.value,
+      fide:notaFid.innerText,
+      obsfide:obsFid.value,
+      poema:poema.value,
+      tempo:tempo.value,
+      dtempo:v('descTempo'),
+      dind:v('descInd'),
+      obsgeral:obsGeral.value,
+      totaldesc:(v('descTempo')+v('descInd')+v('voz1')+v('voz2')+v('voz3')+v('exp1')+v('exp2')+v('exp3')+v('fid1')+v('fid2')+v('fid3')).toFixed(2),
+      notafinal:notaFinal.innerText,
+      avaliador:avaliador.value,
+      data:new Date().toLocaleString()
+    })
+  }).then(()=>alert('Salvo com sucesso'));
 }
 </script>
 
 </body>
 </html>
+
