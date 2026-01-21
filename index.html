@@ -40,6 +40,7 @@ select,input{width:100%}
 <select id="codCandidato" onchange="carregarCandidato()">
 <option value="">Selecione o candidato *</option>
 </select>
+
 </div>
 
 <!-- DADOS -->
@@ -117,40 +118,62 @@ Nota: <b id="notaFid">1,0</b>
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbxJFLFAij8QrKS6089oBAvuj1Krcq7orP_9HNWIRiZ6vIP70yqxnuXkaJ_Qs12H3ACl/exec";
+const URL = "SUA_URL_DO_WEBAPP_AQUI";
 
 let candidatos = [];
 
-/* ===== CARREGAR CANDIDATOS ===== */
+/* =====================
+   CARREGAR CANDIDATOS
+===================== */
 fetch(URL + "?acao=candidatos")
-.then(r => r.json())
-.then(lista => {
-  candidatos = lista;
-  lista.forEach(c => {
-    codCandidato.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`;
+  .then(r => r.json())
+  .then(lista => {
+    candidatos = lista;
+    const sel = document.getElementById("codCandidato");
+    lista.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c.codigo;
+      opt.textContent = c.codigo;
+      sel.appendChild(opt);
+    });
+  })
+  .catch(err => {
+    alert("Erro ao carregar candidatos");
+    console.error(err);
   });
-});
 
-/* ===== CARREGAR AVALIADORES ===== */
+/* =====================
+   CARREGAR AVALIADORES
+===================== */
 fetch(URL + "?acao=avaliadores")
-.then(r => r.json())
-.then(lista => {
-  lista.forEach(a => {
-    avaliador.innerHTML += `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
+  .then(r => r.json())
+  .then(lista => {
+    const sel = document.getElementById("avaliador");
+    lista.forEach(a => {
+      const opt = document.createElement("option");
+      opt.value = a.id;
+      opt.textContent = `${a.id} - ${a.nome}`;
+      sel.appendChild(opt);
+    });
+  })
+  .catch(err => {
+    alert("Erro ao carregar avaliadores");
+    console.error(err);
   });
-});
 
-/* ===== PREENCHER CANDIDATO ===== */
-function carregarCandidato(){
-  const codigo = String(codCandidato.value).trim();
-  const c = candidatos.find(x => String(x.codigo).trim() === codigo);
-  if(!c) return;
+/* =====================
+   AO SELECIONAR CANDIDATO
+===================== */
+function carregarCandidato() {
+  const codigo = document.getElementById("codCandidato").value;
+  const c = candidatos.find(x => String(x.codigo) === String(codigo));
+  if (!c) return;
 
-  concorrente.textContent = c.concorrente;
-  categoria.textContent   = c.categoria;
-  entidade.textContent    = c.entidade;
-  municipio.textContent   = c.municipio;
-  rt.textContent          = c.rt;
+  document.getElementById("concorrente").textContent = c.concorrente || "";
+  document.getElementById("categoria").textContent   = c.categoria || "";
+  document.getElementById("entidade").textContent    = c.entidade || "";
+  document.getElementById("municipio").textContent   = c.municipio || "";
+  document.getElementById("rt").textContent          = c.rt || "";
 }
 
 /* ===== CÁLCULO ===== */
@@ -218,6 +241,7 @@ function salvar(){
 
 </body>
 </html>
+
 
 
 
