@@ -3,22 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <title>Avaliação – Declamação</title>
+
 <style>
-  body{font-family:Arial, Helvetica, sans-serif;background:#f2f2f2;margin:0;padding:10px}
-  .container{max-width:1200px;margin:auto;background:#fff;border:2px solid #000}
-  .header{background:#ffe066;border-bottom:2px solid #000;padding:10px;text-align:center;font-weight:bold}
-  .linha{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:5px;padding:5px;background:#ffe066;border-bottom:2px solid #000}
-  .campo{font-size:13px}
-  .campo span{font-weight:bold}
-  .grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;padding:5px}
-  .box{border:2px solid #000;background:#ffe066;padding:5px;font-size:13px}
-  .box h3{text-align:center;margin:0 0 5px 0;font-size:14px}
-  .box input{width:60px}
-  textarea{width:100%;height:60px}
-  .rodape{display:grid;grid-template-columns:2fr 1fr 1fr;padding:5px;background:#ffe066;border-top:2px solid #000}
-  .btns{text-align:right;padding:10px}
-  button{padding:10px 20px;font-size:16px;font-weight:bold}
-  .notaFinal{font-size:18px;font-weight:bold;text-align:center}
+body{font-family:Arial;background:#f2f2f2;margin:0;padding:10px}
+.container{max-width:1200px;margin:auto;background:#fff;border:2px solid #000}
+.header{background:#ffe066;border-bottom:2px solid #000;padding:10px}
+.linha,.rodape{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:5px;padding:5px;background:#ffe066}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;padding:5px}
+.box{border:2px solid #000;background:#ffe066;padding:5px;font-size:13px}
+.box h3{text-align:center;margin:0 0 5px}
+textarea{width:100%;height:60px}
+.notaFinal{font-size:20px;font-weight:bold;text-align:center}
+.btns{text-align:right;padding:10px}
+button{padding:10px 25px;font-size:16px;font-weight:bold}
 </style>
 </head>
 
@@ -26,50 +23,94 @@
 <div class="container">
 
 <!-- CABEÇALHO -->
-<div class="header" style="display:grid;grid-template-columns:100px 1fr 100px;align-items:center;gap:10px">
-  <div><img src="https://raw.githubusercontent.com/CCN1989/Imagens/refs/heads/main/Logo%20pequeno.png" style="max-height:80px"></div>
-  <div>
-    MTG – MOVIMENTO TRADICIONALISTA GAÚCHO<br>
-    24º Rodeio Nativista de Esteio – CTG Chama Nativa – 12ª RT<br>
-    <strong>Planilha de Avaliação – Declamação</strong>
-  </div>
-  <div style="text-align:right">
-    <img src="https://github.com/CCN1989/Imagens/blob/main/12RT.png?raw=true" style="max-height:80px">
-  </div>
+<div class="header" style="display:grid;grid-template-columns:100px 1fr 100px;align-items:center">
+<img src="https://raw.githubusercontent.com/CCN1989/Imagens/refs/heads/main/Logo%20pequeno.png" height="70">
+<div style="text-align:center">
+<strong>MTG – MOVIMENTO TRADICIONALISTA GAÚCHO</strong><br>
+2º Chama´s da Poesia – CTG Chama Nativa – 12ª RT<br>
+(28/02/26 e 01/03/26)<br>
+<strong>Planilha de Avaliação – Declamação</strong>
+</div>
+<img src="https://github.com/CCN1989/Imagens/blob/main/12RT.png?raw=true" height="70">
 </div>
 
-<!-- SELEÇÃO CANDIDATO -->
-<div style="padding:10px;background:#ffe066;border-bottom:2px solid #000">
+<!-- SELEÇÃO -->
+<div style="padding:8px;background:#ffe066;border-bottom:2px solid #000">
 <select id="codCandidato" onchange="carregarCandidato()">
 <option value="">Selecione o código do concorrente</option>
 </select>
 </div>
 
-<!-- DADOS CANDIDATO -->
+<!-- DADOS -->
 <div class="linha">
-  <div class="campo">Concorrente:<br><span id="concorrente"></span></div>
-  <div class="campo">Categoria:<br><span id="categoria"></span></div>
-  <div class="campo">Entidade:<br><span id="entidade"></span></div>
-  <div class="campo">Município:<br><span id="municipio"></span></div>
-  <div class="campo">RT:<br><span id="rt"></span></div>
+<div>Concorrente:<br><b id="concorrente"></b></div>
+<div>Categoria:<br><b id="categoria"></b></div>
+<div>Entidade:<br><b id="entidade"></b></div>
+<div>Município:<br><b id="municipio"></b></div>
+<div>RT:<br><b id="rt"></b></div>
 </div>
 
-<!-- FORMULÁRIO (SEM ALTERAÇÕES) -->
-<!-- ... mantém exatamente como você enviou ... -->
+<!-- QUADRANTES (INALTERADOS) -->
+<div class="grid">
+
+<div class="box">
+<h3>Fundamento da Voz (3,0)</h3>
+Imposição <input id="voz1" type="number" step="0.1" oninput="calc()"><br>
+Dicção <input id="voz2" type="number" step="0.1" oninput="calc()"><br>
+Inflexão <input id="voz3" type="number" step="0.1" oninput="calc()"><br>
+Descontos: <b id="descVoz">0,0</b><br>
+Nota: <b id="notaVoz">3,0</b>
+<textarea id="obsVoz"></textarea>
+</div>
+
+<div class="box">
+<h3>Expressão Corporal (2,0)</h3>
+Facial <input id="exp1" type="number" step="0.1" oninput="calc()"><br>
+Gestual <input id="exp2" type="number" step="0.1" oninput="calc()"><br>
+Postura <input id="exp3" type="number" step="0.1" oninput="calc()"><br>
+Descontos: <b id="descExp">0,0</b><br>
+Nota: <b id="notaExp">2,0</b>
+<textarea id="obsExp"></textarea>
+</div>
+
+<div class="box">
+<h3>Interpretação (4,0)</h3>
+Nota: <input id="notaInter" type="number" step="0.1" oninput="calc()">
+<textarea id="obsInter"></textarea>
+</div>
+
+<div class="box">
+<h3>Fidelidade ao Texto (1,0)</h3>
+Letra <input id="fid1" type="number" step="0.1" oninput="calc()"><br>
+Verso <input id="fid2" type="number" step="0.1" oninput="calc()"><br>
+Esqueceu <input id="fid3" type="number" step="0.1" oninput="calc()"><br>
+Descontos: <b id="descFid">0,0</b><br>
+Nota: <b id="notaFid">1,0</b>
+<textarea id="obsFid"></textarea>
+</div>
+
+</div>
+
+<!-- DESCONTOS -->
+<div class="grid">
+<div class="box">Tempo <input id="descTempo" oninput="calc()"></div>
+<div class="box">Indumentária <input id="descInd" oninput="calc()"></div>
+<div class="box">Observações<textarea id="obsGeral"></textarea></div>
+<div class="box notaFinal">Nota Final<br><span id="notaFinal">6,00</span></div>
+</div>
 
 <!-- RODAPÉ -->
 <div class="rodape">
-  <div>Data/Hora: <span id="data"></span></div>
-  <div>Avaliador:<br>
-    <select id="avaliador">
-      <option value="">Selecione o avaliador</option>
-    </select>
-  </div>
-  <div class="notaFinal">Nota Final<br><span id="notaFinal">6,00</span></div>
+<div>Data/Hora<br><span id="data"></span></div>
+<div>Avaliador<br>
+<select id="avaliador">
+<option value="">Selecione o avaliador</option>
+</select>
+</div>
 </div>
 
 <div class="btns">
-  <button onclick="salvar()">SALVAR</button>
+<button onclick="salvar()">SALVAR</button>
 </div>
 
 </div>
@@ -80,39 +121,30 @@ const URL = "https://script.google.com/macros/s/AKfycbyYSQinmrwo5iT_lVzO3jQd-FAY
 let candidatos = [];
 let avaliadores = [];
 
-/* =======================
-   🔹 CARREGA CANDIDATOS
-======================= */
+/* =====================
+   CARREGA CANDIDATOS
+===================== */
 fetch(URL + "?acao=candidatos")
   .then(r => r.json())
-  .then(data => {
-    candidatos = data;
-    data.forEach(c => {
-      const opt = document.createElement("option");
-      opt.value = c.codigo;
-      opt.textContent = c.codigo;
-      codCandidato.appendChild(opt);
+  .then(d => {
+    candidatos = d;
+    d.forEach(c => {
+      codCandidato.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`;
     });
   });
 
-/* =======================
-   🔹 CARREGA AVALIADORES
-======================= */
+/* =====================
+   CARREGA AVALIADORES
+===================== */
 fetch(URL + "?acao=avaliadores")
   .then(r => r.json())
-  .then(data => {
-    avaliadores = data;
-    data.forEach(a => {
-      const opt = document.createElement("option");
-      opt.value = a.id;
-      opt.textContent = `${a.id} - ${a.nome}`;
-      avaliador.appendChild(opt);
+  .then(d => {
+    avaliadores = d;
+    d.forEach(a => {
+      avaliador.innerHTML += `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
     });
   });
 
-/* =======================
-   🔹 PREENCHE DADOS CANDIDATO
-======================= */
 function carregarCandidato(){
   const c = candidatos.find(x => x.codigo == codCandidato.value);
   if(!c) return;
@@ -123,14 +155,59 @@ function carregarCandidato(){
   rt.innerText          = c.rt;
 }
 
-/* =======================
-   🔹 FUNÇÕES EXISTENTES
-======================= */
-function v(id){ return parseFloat(document.getElementById(id).value) || 0 }
+function v(id){ return parseFloat(document.getElementById(id).value)||0 }
 
-/* calc() e salvar() permanecem IGUAIS aos seus */
+function calc(){
+  let dv=v('voz1')+v('voz2')+v('voz3');
+  let de=v('exp1')+v('exp2')+v('exp3');
+  let df=v('fid1')+v('fid2')+v('fid3');
 
+  descVoz.innerText=dv.toFixed(1);
+  descExp.innerText=de.toFixed(1);
+  descFid.innerText=df.toFixed(1);
+
+  notaVoz.innerText=(3-dv).toFixed(2);
+  notaExp.innerText=(2-de).toFixed(2);
+  notaFid.innerText=(1-df).toFixed(2);
+
+  let final=6+v('notaInter')-(dv+de+df+v('descTempo')+v('descInd'));
+  notaFinal.innerText=final.toFixed(2);
+  data.innerText=new Date().toLocaleString();
+}
+
+function salvar(){
+  if(!codCandidato.value || !notaInter.value || !avaliador.value){
+    alert("Campos obrigatórios não preenchidos");
+    return;
+  }
+
+  fetch(URL,{
+    method:"POST",
+    body:JSON.stringify({
+      cod:codCandidato.value,
+      concorrente:concorrente.innerText,
+      categoria:categoria.innerText,
+      entidade:entidade.innerText,
+      municipio:municipio.innerText,
+      fvoz:notaVoz.innerText,
+      obsvoz:obsVoz.value,
+      fexp:notaExp.innerText,
+      obsexp:obsExp.value,
+      inter:v('notaInter'),
+      obsinter:obsInter.value,
+      fide:notaFid.innerText,
+      obsfide:obsFid.value,
+      dtempo:v('descTempo'),
+      dind:v('descInd'),
+      obsgeral:obsGeral.value,
+      totaldesc:(dv+de+df+v('descTempo')+v('descInd')),
+      notafinal:notaFinal.innerText,
+      avaliador:avaliador.value,
+      data:new Date().toLocaleString()
+    })
+  }).then(()=>alert("Salvo com sucesso"));
+}
 </script>
+
 </body>
 </html>
-
