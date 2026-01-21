@@ -227,53 +227,80 @@ function salvar(){
     alert("Selecione o candidato");
     return;
   }
+
   if(!avaliador.value){
     alert("Selecione o avaliador");
     return;
   }
 
-  const params = new URLSearchParams({
-    acao: "salvar",
-    cod: codCandidato.value,
-    concorrente: concorrente.textContent,
-    categoria: categoria.textContent,
-    entidade: entidade.textContent,
-    municipio: municipio.textContent,
-    rt: rt.textContent,
-    notaFundamento: notaVoz.textContent,
-    obsFundamento: obsVoz.value,
-    notaExpressao: notaExp.textContent,
-    obsExpressao: obsExp.value,
-    notaInter: notaInter.value,
-    obsInter: obsInter.value,
-    notaFidelidade: notaFid.textContent,
-    descTempo: descTempo.value || 0,
-    descInd: descInd.value || 0,
-    obsGeral: obsGeral.value,
-    notaFinal: notaFinal.textContent,
-    avaliador: avaliador.value,
-    data: new Date().toLocaleString()
-  });
+  fetch(URL, {
+    method: "POST",
+    body: JSON.stringify({
+      cod: codCandidato.value,
+      concorrente: concorrente.textContent,
+      categoria: categoria.textContent,
+      entidade: entidade.textContent,
+      municipio: municipio.textContent,
+      rt: rt.textContent,
 
-  fetch(URL + "?" + params.toString())
-    .then(r => r.json())
-    .then(resp => {
-      if(resp.status === "OK"){
-        alert("Avaliação gravada com sucesso");
-        location.reload();
-      } else {
-        alert("Erro: " + resp.msg);
-      }
+      fundamento: notaVoz.textContent,
+      obsFundamento: obsVoz.value,
+
+      expressao: notaExp.textContent,
+      obsExpressao: obsExp.value,
+
+      interpretacao: notaInter.value,
+      obsInterpretacao: obsInter.value,
+
+      fidelidade: notaFid.textContent,
+
+      descTempo: descTempo.value || 0,
+      descInd: descInd.value || 0,
+      obsGeral: obsGeral.value,
+
+      notaFinal: notaFinal.textContent,
+      avaliador: avaliador.value,
+      data: new Date().toLocaleString()
     })
-    .catch(err => {
-      console.error(err);
-      alert("Erro de comunicação com o servidor");
-    });
+  })
+  .then(r => r.json())
+  .then(r => {
+    if (r.status === "OK") {
+      alert("Avaliação gravada com sucesso");
+      limparFormulario();
+    } else {
+      alert("Erro: " + r.msg);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Erro de comunicação com o servidor");
+  });
+}
+
+function limparFormulario(){
+  document.querySelectorAll("input").forEach(i => i.value = "");
+  document.querySelectorAll("textarea").forEach(t => t.value = "");
+  document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+
+  concorrente.textContent = "";
+  categoria.textContent = "";
+  entidade.textContent = "";
+  municipio.textContent = "";
+  rt.textContent = "";
+
+  notaVoz.textContent = "3,0";
+  notaExp.textContent = "2,0";
+  notaFid.textContent = "1,0";
+  notaFinal.textContent = "6,00";
+
+  data.textContent = new Date().toLocaleString();
 }
 </script>
 
 </body>
 </html>
+
 
 
 
