@@ -175,40 +175,46 @@ function calc(){
   data.innerText=new Date().toLocaleString();
 }
 
+<script>
 function salvar(){
-  if(!codCandidato.value || !notaInter.value || !avaliador.value){
-    alert("Campos obrigatórios não preenchidos");
-    return;
-  }
 
-  fetch(URL,{
-    method:"POST",
-    body:JSON.stringify({
-      cod:codCandidato.value,
-      concorrente:concorrente.innerText,
-      categoria:categoria.innerText,
-      entidade:entidade.innerText,
-      municipio:municipio.innerText,
-      fvoz:notaVoz.innerText,
-      obsvoz:obsVoz.value,
-      fexp:notaExp.innerText,
-      obsexp:obsExp.value,
-      inter:v('notaInter'),
-      obsinter:obsInter.value,
-      fide:notaFid.innerText,
-      obsfide:obsFid.value,
-      dtempo:v('descTempo'),
-      dind:v('descInd'),
-      obsgeral:obsGeral.value,
-      totaldesc:(dv+de+df+v('descTempo')+v('descInd')),
-      notafinal:notaFinal.innerText,
-      avaliador:avaliador.value,
-      data:new Date().toLocaleString()
-    })
-  }).then(()=>alert("Salvo com sucesso"));
+  const dados = {
+    cod: codCandidato.value,
+    concorrente: concorrente.innerText,
+    categoria: categoria.innerText,
+    entidade: entidade.innerText,
+    municipio: municipio.innerText,
+    fvoz: notaVoz.innerText,
+    obsvoz: obsVoz.value,
+    fexp: notaExp.innerText,
+    obsexp: obsExp.value,
+    inter: notaInter.value,
+    obsinter: obsInter.value,
+    fide: notaFid.innerText,
+    obsfide: obsFid.value,
+    dtempo: descTempo.value || 0,
+    dind: descInd.value || 0,
+    obsgeral: obsGeral.value,
+    notafinal: notaFinal.innerText,
+    avaliador: avaliador.value,
+    data: new Date().toLocaleString()
+  };
+
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(dados)
+  })
+  .then(r => r.text())
+  .then(r => alert(r))
+  .catch(e => alert("Erro ao salvar"));
 }
 </script>
 
+
 </body>
 </html>
+
 
