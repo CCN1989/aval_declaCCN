@@ -50,7 +50,7 @@ button{padding:10px 25px;font-size:16px;font-weight:bold}
 <div>RT:<br><b id="rt"></b></div>
 </div>
 
-<!-- QUADRANTES (INALTERADOS) -->
+<!-- QUADRANTES -->
 <div class="grid">
 
 <div class="box">
@@ -58,8 +58,8 @@ button{padding:10px 25px;font-size:16px;font-weight:bold}
 Imposição <input id="voz1" type="number" step="0.1" oninput="calc()"><br>
 Dicção <input id="voz2" type="number" step="0.1" oninput="calc()"><br>
 Inflexão <input id="voz3" type="number" step="0.1" oninput="calc()"><br>
-Descontos: <b id="descVoz">0,0</b><br>
-Nota: <b id="notaVoz">3,0</b>
+Descontos: <b id="descVoz">0,00</b><br>
+Nota: <b id="notaVoz">3,00</b>
 <textarea id="obsVoz"></textarea>
 </div>
 
@@ -68,8 +68,8 @@ Nota: <b id="notaVoz">3,0</b>
 Facial <input id="exp1" type="number" step="0.1" oninput="calc()"><br>
 Gestual <input id="exp2" type="number" step="0.1" oninput="calc()"><br>
 Postura <input id="exp3" type="number" step="0.1" oninput="calc()"><br>
-Descontos: <b id="descExp">0,0</b><br>
-Nota: <b id="notaExp">2,0</b>
+Descontos: <b id="descExp">0,00</b><br>
+Nota: <b id="notaExp">2,00</b>
 <textarea id="obsExp"></textarea>
 </div>
 
@@ -84,8 +84,8 @@ Nota: <input id="notaInter" type="number" step="0.1" oninput="calc()">
 Letra <input id="fid1" type="number" step="0.1" oninput="calc()"><br>
 Verso <input id="fid2" type="number" step="0.1" oninput="calc()"><br>
 Esqueceu <input id="fid3" type="number" step="0.1" oninput="calc()"><br>
-Descontos: <b id="descFid">0,0</b><br>
-Nota: <b id="notaFid">1,0</b>
+Descontos: <b id="descFid">0,00</b><br>
+Nota: <b id="notaFid">1,00</b>
 <textarea id="obsFid"></textarea>
 </div>
 
@@ -93,10 +93,10 @@ Nota: <b id="notaFid">1,0</b>
 
 <!-- DESCONTOS -->
 <div class="grid">
-<div class="box">Tempo <input id="descTempo" oninput="calc()"></div>
-<div class="box">Indumentária <input id="descInd" oninput="calc()"></div>
+<div class="box">Tempo <input id="descTempo" type="number" step="0.1" oninput="calc()"></div>
+<div class="box">Indumentária <input id="descInd" type="number" step="0.1" oninput="calc()"></div>
 <div class="box">Observações<textarea id="obsGeral"></textarea></div>
-<div class="box notaFinal">Nota Final<br><span id="notaFinal">6,00</span></div>
+<div class="box notaFinal">Nota Final<br><span id="notaFinal">10,00</span></div>
 </div>
 
 <!-- RODAPÉ -->
@@ -117,105 +117,88 @@ Nota: <b id="notaFid">1,0</b>
 
 <script>
 const URL = "https://script.google.com/macros/s/AKfycbzqdcWGtFP_oczFpG29QuBe0QH4qlEMbbk8AG89nwI4MbMokzJ6uZppKZJH_1s5Q2k7/exec";
+let candidatos=[], avaliadores=[];
 
-let candidatos = [];
-let avaliadores = [];
-
-/* =====================
-   CARREGA CANDIDATOS
-===================== */
-fetch(URL + "?acao=candidatos")
-  .then(r => r.json())
-  .then(d => {
-    candidatos = d;
-    d.forEach(c => {
-      codCandidato.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`;
-    });
+/* ===== CARREGA CANDIDATOS ===== */
+fetch(URL+"?acao=candidatos").then(r=>r.json()).then(d=>{
+  candidatos=d;
+  d.forEach(c=>{
+    codCandidato.innerHTML+=`<option value="${c.codigo}">${c.codigo}</option>`;
   });
+});
 
-/* =====================
-   CARREGA AVALIADORES
-===================== */
-fetch(URL + "?acao=avaliadores")
-  .then(r => r.json())
-  .then(d => {
-    avaliadores = d;
-    d.forEach(a => {
-      avaliador.innerHTML += `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
-    });
+/* ===== CARREGA AVALIADORES ===== */
+fetch(URL+"?acao=avaliadores").then(r=>r.json()).then(d=>{
+  avaliadores=d;
+  d.forEach(a=>{
+    avaliador.innerHTML+=`<option value="${a.nome}">${a.nome}</option>`;
   });
+});
 
 function carregarCandidato(){
-  const c = candidatos.find(x => x.codigo == codCandidato.value);
-  if(!c) return;
-  concorrente.innerText = c.concorrente;
-  categoria.innerText   = c.categoria;
-  entidade.innerText    = c.entidade;
-  municipio.innerText   = c.municipio;
-  rt.innerText          = c.rt;
+  const c=candidatos.find(x=>x.codigo==codCandidato.value);
+  if(!c)return;
+  concorrente.innerText=c.concorrente;
+  categoria.innerText=c.categoria;
+  entidade.innerText=c.entidade;
+  municipio.innerText=c.municipio;
+  rt.innerText=c.rt;
 }
 
-function v(id){ return parseFloat(document.getElementById(id).value)||0 }
+function v(id){return parseFloat(document.getElementById(id).value)||0}
 
 function calc(){
   let dv=v('voz1')+v('voz2')+v('voz3');
   let de=v('exp1')+v('exp2')+v('exp3');
   let df=v('fid1')+v('fid2')+v('fid3');
 
-  descVoz.innerText=dv.toFixed(1);
-  descExp.innerText=de.toFixed(1);
-  descFid.innerText=df.toFixed(1);
+  descVoz.innerText=dv.toFixed(2);
+  descExp.innerText=de.toFixed(2);
+  descFid.innerText=df.toFixed(2);
 
-  notaVoz.innerText=(3-dv).toFixed(2);
-  notaExp.innerText=(2-de).toFixed(2);
-  notaFid.innerText=(1-df).toFixed(2);
+  let nv=Math.max(0,3-dv);
+  let ne=Math.max(0,2-de);
+  let nf=Math.max(0,1-df);
+  let ni=v('notaInter');
 
-  let final=6+v('notaInter')-(dv+de+df+v('descTempo')+v('descInd'));
+  notaVoz.innerText=nv.toFixed(2);
+  notaExp.innerText=ne.toFixed(2);
+  notaFid.innerText=nf.toFixed(2);
+
+  let final=nv+ne+ni+nf-(v('descTempo')+v('descInd'));
   notaFinal.innerText=final.toFixed(2);
   data.innerText=new Date().toLocaleString();
 }
 
-<script>
 function salvar(){
-
-  const dados = {
-    cod: codCandidato.value,
-    concorrente: concorrente.innerText,
-    categoria: categoria.innerText,
-    entidade: entidade.innerText,
-    municipio: municipio.innerText,
-    fvoz: notaVoz.innerText,
-    obsvoz: obsVoz.value,
-    fexp: notaExp.innerText,
-    obsexp: obsExp.value,
-    inter: notaInter.value,
-    obsinter: obsInter.value,
-    fide: notaFid.innerText,
-    obsfide: obsFid.value,
-    dtempo: descTempo.value || 0,
-    dind: descInd.value || 0,
-    obsgeral: obsGeral.value,
-    notafinal: notaFinal.innerText,
-    avaliador: avaliador.value,
-    data: new Date().toLocaleString()
-  };
-
-  fetch(URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(dados)
-  })
-  .then(r => r.text())
-  .then(r => alert(r))
-  .catch(e => alert("Erro ao salvar"));
+  fetch(URL,{
+    method:"POST",
+    body:JSON.stringify({
+      cod:codCandidato.value,
+      concorrente:concorrente.innerText,
+      categoria:categoria.innerText,
+      entidade:entidade.innerText,
+      municipio:municipio.innerText,
+      fvoz:notaVoz.innerText,
+      obsvoz:obsVoz.value,
+      fexp:notaExp.innerText,
+      obsexp:obsExp.value,
+      inter:v('notaInter'),
+      obsinter:obsInter.value,
+      fide:notaFid.innerText,
+      obsfide:obsFid.value,
+      dtempo:v('descTempo'),
+      dind:v('descInd'),
+      obsgeral:obsGeral.value,
+      notafinal:notaFinal.innerText,
+      avaliador:avaliador.value,
+      data:new Date().toLocaleString()
+    })
+  }).then(()=>alert("Avaliação salva e PDF gerado!"));
 }
 </script>
 
-
 </body>
 </html>
-
 
 
