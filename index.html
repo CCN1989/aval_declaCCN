@@ -117,62 +117,51 @@ Nota: <b id="notaFid">1,0</b>
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbziCH8JAFnEfa4MuDr7b8rfsO2idldP3b0mKeNCkqZ0SRVgKJ-L8tPgxRXPvbo9_tuG/exec";
+const URL = "https://script.google.com/macros/s/AKfycbzVa98kKm2c_GTSylAxnuF4_YcY3MMrZA4I22FL4JuUVxbLt2G20l-5sYR1Sj0HNQUj/exec";
 
-let candidatos=[], avaliadores=[];
+let candidatos = [];
 
-/* LOAD CANDIDATOS */
-fetch(URL+"?acao=candidatos").then(r=>r.json()).then(d=>{
-  candidatos=d;
-  d.forEach(c=>{
-    codCandidato.innerHTML+=`<option value="${c.codigo}">${c.codigo}</option>`;
-  });
-});
+/* =====================
+   CARREGA CANDIDATOS
+===================== */
+fetch(URL + "?acao=candidatos")
+  .then(r => r.json())
+  .then(lista => {
+    candidatos = lista;
+    lista.forEach(c => {
+      codCandidato.innerHTML +=
+        `<option value="${c.codigo}">${c.codigo}</option>`;
+    });
+  })
+  .catch(() => alert("Erro ao carregar candidatos"));
 
-/* LOAD AVALIADORES */
-fetch(URL+"?acao=avaliadores").then(r=>r.json()).then(d=>{
-  avaliadores=d;
-  d.forEach(a=>{
-    avaliador.innerHTML+=`<option value="${a.id}">${a.id} - ${a.nome}</option>`;
-  });
-});
+/* =====================
+   CARREGA AVALIADORES
+===================== */
+fetch(URL + "?acao=avaliadores")
+  .then(r => r.json())
+  .then(lista => {
+    lista.forEach(a => {
+      avaliador.innerHTML +=
+        `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
+    });
+  })
+  .catch(() => alert("Erro ao carregar avaliadores"));
 
-codCandidato.onchange=()=>{
-  const c=candidatos.find(x=>x.codigo==codCandidato.value);
-  if(!c)return;
-  concorrente.innerText=c.concorrente;
-  categoria.innerText=c.categoria;
-  entidade.innerText=c.entidade;
-  municipio.innerText=c.municipio;
-  rt.innerText=c.rt;
-};
+function carregarCandidato(){
+  const c = candidatos.find(x => x.codigo == codCandidato.value);
+  if (!c) return;
 
-function v(id){return parseFloat(document.getElementById(id).value)||0}
-
-function calc(){
-  let dv=v('voz1')+v('voz2')+v('voz3');
-  let de=v('exp1')+v('exp2')+v('exp3');
-  let df=v('fid1')+v('fid2')+v('fid3');
-  descVoz.innerText=dv.toFixed(1);
-  descExp.innerText=de.toFixed(1);
-  descFid.innerText=df.toFixed(1);
-  notaVoz.innerText=(3-dv).toFixed(2);
-  notaExp.innerText=(2-de).toFixed(2);
-  notaFid.innerText=(1-df).toFixed(2);
-  let final=6+v('notaInter')-(dv+de+df+v('descTempo')+v('descInd'));
-  notaFinal.innerText=final.toFixed(2);
-  data.innerText=new Date().toLocaleString();
+  concorrente.innerText = c.concorrente;
+  categoria.innerText   = c.categoria;
+  entidade.innerText    = c.entidade;
+  municipio.innerText   = c.municipio;
+  rt.innerText          = c.rt;
 }
 
-function limpar(){
-  document.querySelectorAll("input,textarea").forEach(e=>e.value="");
-  document.querySelectorAll("b").forEach(e=>e.innerText="");
-  codCandidato.value="";
-  avaliador.value="";
-  notaFinal.innerText="6,00";
-}
-
-<script>
+/* =====================
+   SALVAR
+===================== */
 function salvar(){
 
   if (!codCandidato.value) {
@@ -191,17 +180,6 @@ function salvar(){
     categoria: categoria.innerText,
     entidade: entidade.innerText,
     municipio: municipio.innerText,
-    fvoz: notaVoz.innerText,
-    obsvoz: obsVoz.value,
-    fexp: notaExp.innerText,
-    obsexp: obsExp.value,
-    inter: notaInter.value || 0,
-    obsinter: obsInter.value,
-    fide: notaFid.innerText,
-    obsfide: obsFid.value,
-    dtempo: descTempo.value || 0,
-    dind: descInd.value || 0,
-    obsgeral: obsGeral.value,
     notafinal: notaFinal.innerText,
     avaliador: avaliador.value,
     data: new Date().toLocaleString()
@@ -209,29 +187,27 @@ function salvar(){
 
   fetch(URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dados)
   })
   .then(r => r.json())
   .then(resp => {
     if (resp.status === "OK") {
-      alert(resp.msg);
-      location.reload(); // limpa a tela
+      alert("Avaliação gravada com sucesso");
+      location.reload();
     } else {
       alert("Erro: " + resp.msg);
     }
   })
-  .catch(err => {
-    alert("Falha de comunicação com o servidor");
-  });
+  .catch(() => alert("Falha ao comunicar com o servidor"));
 }
 </script>
 
 
+
 </body>
 </html>
+
 
 
 
