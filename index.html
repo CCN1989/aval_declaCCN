@@ -117,7 +117,7 @@ Nota: <b id="notaFid">1,0</b>
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbxugpgGiC76jaNZ6ZX99A3UvjyHmhPdofbXFA5Mr98u-9zuvvIQzeH4zHDzeZ_Ti6Oo/exec";
+const URL = "https://script.google.com/macros/s/AKfycbziCH8JAFnEfa4MuDr7b8rfsO2idldP3b0mKeNCkqZ0SRVgKJ-L8tPgxRXPvbo9_tuG/exec";
 
 let candidatos=[], avaliadores=[];
 
@@ -172,48 +172,67 @@ function limpar(){
   notaFinal.innerText="6,00";
 }
 
+<script>
 function salvar(){
-  if(!codCandidato.value || !avaliador.value || !notaInter.value){
-    alert("Preencha candidato, avaliador e interpretação.");
+
+  if (!codCandidato.value) {
+    alert("Selecione o candidato");
     return;
   }
 
-  fetch(URL,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      cod:codCandidato.value,
-      concorrente:concorrente.innerText,
-      categoria:categoria.innerText,
-      entidade:entidade.innerText,
-      municipio:municipio.innerText,
-      fvoz:notaVoz.innerText,
-      obsvoz:obsVoz.value,
-      fexp:notaExp.innerText,
-      obsexp:obsExp.value,
-      inter:notaInter.value,
-      obsinter:obsInter.value,
-      fide:notaFid.innerText,
-      obsfide:obsFid.value,
-      dtempo:v('descTempo'),
-      dind:v('descInd'),
-      obsgeral:obsGeral.value,
-      notafinal:notaFinal.innerText,
-      avaliador:avaliador.value,
-      data:new Date().toLocaleString()
-    })
+  if (!avaliador.value) {
+    alert("Selecione o avaliador");
+    return;
+  }
+
+  const dados = {
+    cod: codCandidato.value,
+    concorrente: concorrente.innerText,
+    categoria: categoria.innerText,
+    entidade: entidade.innerText,
+    municipio: municipio.innerText,
+    fvoz: notaVoz.innerText,
+    obsvoz: obsVoz.value,
+    fexp: notaExp.innerText,
+    obsexp: obsExp.value,
+    inter: notaInter.value || 0,
+    obsinter: obsInter.value,
+    fide: notaFid.innerText,
+    obsfide: obsFid.value,
+    dtempo: descTempo.value || 0,
+    dind: descInd.value || 0,
+    obsgeral: obsGeral.value,
+    notafinal: notaFinal.innerText,
+    avaliador: avaliador.value,
+    data: new Date().toLocaleString()
+  };
+
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(dados)
   })
-  .then(r=>r.text())
-  .then(()=>{
-    alert("Avaliação gravada com sucesso ✔");
-    limpar();
+  .then(r => r.json())
+  .then(resp => {
+    if (resp.status === "OK") {
+      alert(resp.msg);
+      location.reload(); // limpa a tela
+    } else {
+      alert("Erro: " + resp.msg);
+    }
   })
-  .catch(()=>alert("Erro ao gravar avaliação"));
+  .catch(err => {
+    alert("Falha de comunicação com o servidor");
+  });
 }
 </script>
 
+
 </body>
 </html>
+
 
 
 
