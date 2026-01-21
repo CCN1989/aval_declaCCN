@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Avaliação – Declamação</title>
+<style>
+  body{font-family:Arial, Helvetica, sans-serif;background:#f2f2f2;margin:0;padding:10px}
+  .container{max-width:1200px;margin:auto;background:#fff;border:2px solid #000}
+  .header{background:#ffe066;border-bottom:2px solid #000;padding:10px;text-align:center;font-weight:bold}
+  .linha{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:5px;padding:5px;background:#ffe066;border-bottom:2px solid #000}
+  .campo{font-size:13px}
+  .campo span{font-weight:bold}
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;padding:5px}
+  .box{border:2px solid #000;background:#ffe066;padding:5px;font-size:13px}
+  .box h3{text-align:center;margin:0 0 5px 0;font-size:14px}
+  .box input{width:60px}
+  textarea{width:100%;height:60px}
+  .rodape{display:grid;grid-template-columns:2fr 1fr 1fr;padding:5px;background:#ffe066;border-top:2px solid #000}
+  .btns{text-align:right;padding:10px}
+  button{padding:10px 20px;font-size:16px;font-weight:bold}
+  .notaFinal{font-size:18px;font-weight:bold;text-align:center}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+MTG – MOVIMENTO TRADICIONALISTA GAÚCHO<br>
+24º Rodeio Nativista de Esteio – CTG Chama Nativa – 12ª RT<br>
+Planilha de Avaliação – Declamação
+</div>
+
+<div style="padding:10px;background:#ffe066;border-bottom:2px solid #000">
+<select id="codCandidato" onchange="carregarCandidato()">
+<option value="">Selecione o código do concorrente</option>
+</select>
+</div>
+
+<div class="linha">
+<div class="campo">Concorrente:<br><span id="concorrente"></span></div>
+<div class="campo">Categoria:<br><span id="categoria"></span></div>
+<div class="campo">Entidade:<br><span id="entidade"></span></div>
+<div class="campo">Município:<br><span id="municipio"></span></div>
+<div class="campo">RT:<br><span id="rt"></span></div>
+</div>
+
+<div class="grid">
+
+<div class="box">
+<h3>Fundamento da Voz (3,0)</h3>
+Imposição (0,5) <input type="number" step="0.1" id="voz1" oninput="calc()"><br>
+Dicção (0,5) <input type="number" step="0.1" id="voz2" oninput="calc()"><br>
+Inflexão (0,5) <input type="number" step="0.1" id="voz3" oninput="calc()"><br>
+Total descontos: <span id="descVoz">0,0</span><br>
+Nota: <span id="notaVoz">3,0</span>
+<textarea id="obsVoz" placeholder="Observações"></textarea>
+</div>
+
+<div class="box">
+<h3>Expressão Corporal (2,0)</h3>
+Facial (0,3) <input type="number" step="0.1" id="exp1" oninput="calc()"><br>
+Gestual (0,3) <input type="number" step="0.1" id="exp2" oninput="calc()"><br>
+Postura Cênica (0,4) <input type="number" step="0.1" id="exp3" oninput="calc()"><br>
+Total descontos: <span id="descExp">0,0</span><br>
+Nota: <span id="notaExp">2,0</span>
+<textarea id="obsExp"></textarea>
+</div>
+
+<div class="box">
+<h3>Interpretação da Mensagem (4,0)</h3>
+<input type="number" step="0.1" id="notaInter" oninput="calc()"><br>
+Excelente (3,6 a 4,0)<br>
+Bom (3,1 a 3,5)<br>
+Regular (2,6 a 3,0)<br>
+Suficiente (2,1 a 2,5)<br>
+Não terminou (0,0 a 2,0)
+<textarea id="obsInter"></textarea>
+</div>
+
+<div class="box">
+<h3>Fidelidade ao Texto (1,0)</h3>
+Letra/Palavra (0,2) <input type="number" step="0.1" id="fid1" oninput="calc()"><br>
+Verso/Estrofe (0,4) <input type="number" step="0.1" id="fid2" oninput="calc()"><br>
+Esqueceu (0,4) <input type="number" step="0.1" id="fid3" oninput="calc()"><br>
+Total descontos: <span id="descFid">0,0</span><br>
+Nota: <span id="notaFid">1,0</span>
+<textarea id="obsFid"></textarea>
+</div>
+
+</div>
+
+<div class="grid">
+<div class="box">Poema:<textarea id="poema"></textarea></div>
+<div class="box">Tempo:<textarea id="tempo"></textarea></div>
+<div class="box">
+<h3>Descontos</h3>
+Tempo (1,0/min) <input type="number" step="0.1" id="descTempo" oninput="calc()"><br>
+Indumentária (2,0) <input type="number" step="0.1" id="descInd" oninput="calc()">
+</div>
+<div class="box">Observações Gerais<textarea id="obsGeral"></textarea></div>
+</div>
+
+<div class="rodape">
+<div>Data/Hora: <span id="data"></span></div>
+<div>Avaliador:<br><select id="avaliador"></select></div>
+<div class="notaFinal">Nota Final<br><span id="notaFinal">0,00</span></div>
+</div>
+
+<div class="btns">
+<button onclick="salvar()">SALVAR</button>
+</div>
+
+</div>
+
+<script>
+const URL = "COLE_AQUI_URL_APPS_SCRIPT";
+let candidatos=[], avaliadores=[];
+
+fetch('candidatos.json').then(r=>r.json()).then(d=>{candidatos=d;d.forEach(c=>codCandidato.innerHTML+=`<option value="${c.codigo}">${c.codigo}</option>`)});
+fetch('avaliadores.json').then(r=>r.json()).then(d=>{avaliadores=d;d.forEach(a=>avaliador.innerHTML+=`<option value="${a.id}">${a.id} - ${a.nome}</option>`)});
+
+function carregarCandidato(){
+ let c=candidatos.find(x=>x.codigo===codCandidato.value); if(!c)return;
+ concorrente.innerText=c.concorrente;categoria.innerText=c.categoria;
+ entidade.innerText=c.entidade;municipio.innerText=c.municipio;rt.innerText=c.rt;
+}
+function v(id){return parseFloat(document.getElementById(id).value)||0}
+function calc(){
+ let dv=v('voz1')+v('voz2')+v('voz3');
+ let de=v('exp1')+v('exp2')+v('exp3');
+ let df=v('fid1')+v('fid2')+v('fid3');
+ descVoz.innerText=dv.toFixed(1); 
+ descExp.innerText=de.toFixed(1); 
+ descFid.innerText=df.toFixed(1);
+
+ // Notas individuais (bases fixas)
+ let notaVozCalc = 3 - dv;
+ let notaExpCalc = 2 - de;
+ let notaFidCalc = 1 - df;
+
+ notaVoz.innerText = notaVozCalc.toFixed(2);
+ notaExp.innerText = notaExpCalc.toFixed(2);
+ notaFid.innerText = notaFidCalc.toFixed(2);
+
+ // Base inicial 6,0 (quadrantes 1 + 2 + 4)
+ let base = 6.0;
+ let interpretacao = v('notaInter');
+ let descontosGerais = v('descTempo') + v('descInd');
+
+ let total = base + interpretacao - descontosGerais;
+ notaFinal.innerText = total.toFixed(2);
+ data.innerText = new Date().toLocaleString();
+}
+function salvar(){
+ if(!codCandidato.value||!notaInter.value||!avaliador.value){alert('Campos obrigatórios');return;}
+ fetch(URL,{method:'POST',body:JSON.stringify({
+ cod:codCandidato.value,concorrente:concorrente.innerText,categoria:categoria.innerText,entidade:entidade.innerText,
+ municipio:municipio.innerText,fvoz:notaVoz.innerText,obsvoz:obsVoz.value,
+ fexp:notaExp.innerText,obsexp:obsExp.value,
+ inter:v('notaInter'),obsinter:obsInter.value,
+ fide:notaFid.innerText,obsfide:obsFid.value,
+ poema:poema.value,tempo:tempo.value,
+ dtempo:v('descTempo'),dind:v('descInd'),obsgeral:obsGeral.value,
+ totaldesc:(v('descTempo')+v('descInd')).toFixed(2),notafinal:notaFinal.innerText,
+ avaliador:avaliador.value,data:new Date().toLocaleString()
+ })}).then(()=>alert('Salvo com sucesso'));
+}
+</script>
+</body>
+</html>
