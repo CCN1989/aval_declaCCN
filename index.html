@@ -118,7 +118,7 @@ Nota: <b id="notaFid">1,0</b>
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbx083Lv0XAsF8GVzsz7Yko6D3LO0u2dfLEtq06lN167FToDJJ9uUoETSsGAhULcjcfn/exec";
+const URL = "https://script.google.com/macros/s/AKfycbxnDEmtoKlLqjLRhSEo4NkZzFr0YOSkS2TMaTOlMEGoMgkdDwPn5thzWVvt5vtEES4r/exec";
 
 let candidatos = [];
 
@@ -131,10 +131,7 @@ fetch(URL + "?acao=candidatos")
     candidatos = lista;
     const sel = document.getElementById("codCandidato");
     lista.forEach(c => {
-      const opt = document.createElement("option");
-      opt.value = c.codigo;
-      opt.textContent = c.codigo;
-      sel.appendChild(opt);
+      sel.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`;
     });
   })
   .catch(err => {
@@ -150,10 +147,7 @@ fetch(URL + "?acao=avaliadores")
   .then(lista => {
     const sel = document.getElementById("avaliador");
     lista.forEach(a => {
-      const opt = document.createElement("option");
-      opt.value = a.id;
-      opt.textContent = `${a.id} - ${a.nome}`;
-      sel.appendChild(opt);
+      sel.innerHTML += `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
     });
   })
   .catch(err => {
@@ -164,17 +158,18 @@ fetch(URL + "?acao=avaliadores")
 /* =====================
    AO SELECIONAR CANDIDATO
 ===================== */
-function carregarCandidato() {
+document.getElementById("codCandidato").addEventListener("change", () => {
   const codigo = document.getElementById("codCandidato").value;
   const c = candidatos.find(x => String(x.codigo) === String(codigo));
   if (!c) return;
 
-  document.getElementById("concorrente").textContent = c.concorrente || "";
-  document.getElementById("categoria").textContent   = c.categoria || "";
-  document.getElementById("entidade").textContent    = c.entidade || "";
-  document.getElementById("municipio").textContent   = c.municipio || "";
-  document.getElementById("rt").textContent          = c.rt || "";
-}
+  document.getElementById("concorrente").innerText = c.concorrente || "";
+  document.getElementById("categoria").innerText   = c.categoria || "";
+  document.getElementById("entidade").innerText    = c.entidade || "";
+  document.getElementById("municipio").innerText   = c.municipio || "";
+  document.getElementById("rt").innerText          = c.rt || "";
+});
+
 
 /* ===== CÁLCULO ===== */
 function v(id){
@@ -241,6 +236,7 @@ function salvar(){
 
 </body>
 </html>
+
 
 
 
