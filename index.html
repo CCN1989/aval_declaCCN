@@ -118,58 +118,77 @@ Nota: <b id="notaFid">1,0</b>
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbxnDEmtoKlLqjLRhSEo4NkZzFr0YOSkS2TMaTOlMEGoMgkdDwPn5thzWVvt5vtEES4r/exec";
+const URL = "https://script.google.com/macros/s/AKfycbzVa98kKm2c_GTSylAxnuF4_YcY3MMrZA4I22FL4JuUVxbLt2G20l-5sYR1Sj0HNQUj/exec";
 
 let candidatos = [];
 
-/* =====================
+/* =========================
    CARREGAR CANDIDATOS
-===================== */
+========================= */
 fetch(URL + "?acao=candidatos")
   .then(r => r.json())
   .then(lista => {
     candidatos = lista;
+
     const sel = document.getElementById("codCandidato");
+    sel.innerHTML = `<option value="">Selecione o candidato *</option>`;
+
     lista.forEach(c => {
-      sel.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`;
+      sel.innerHTML += `
+        <option value="${String(c.codigo).trim()}">
+          ${String(c.codigo).trim()}
+        </option>`;
     });
   })
   .catch(err => {
-    alert("Erro ao carregar candidatos");
     console.error(err);
+    alert("Erro ao carregar candidatos");
   });
 
-/* =====================
+/* =========================
+   AO SELECIONAR CANDIDATO
+========================= */
+document.getElementById("codCandidato").addEventListener("change", () => {
+
+  const codigo = String(codCandidato.value).trim();
+
+  const c = candidatos.find(x =>
+    String(x.codigo).trim() === codigo
+  );
+
+  if (!c) {
+    console.warn("Candidato não encontrado:", codigo);
+    return;
+  }
+
+  document.getElementById("concorrente").textContent = c.concorrente;
+  document.getElementById("categoria").textContent   = c.categoria;
+  document.getElementById("entidade").textContent    = c.entidade;
+  document.getElementById("municipio").textContent   = c.municipio;
+  document.getElementById("rt").textContent          = c.rt;
+});
+
+   
+/* =========================
    CARREGAR AVALIADORES
-===================== */
+========================= */
 fetch(URL + "?acao=avaliadores")
   .then(r => r.json())
   .then(lista => {
     const sel = document.getElementById("avaliador");
+    sel.innerHTML = `<option value="">Selecione o avaliador *</option>`;
+
     lista.forEach(a => {
-      sel.innerHTML += `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
+      sel.innerHTML += `
+        <option value="${a.id}">
+          ${a.id} - ${a.nome}
+        </option>`;
     });
   })
   .catch(err => {
-    alert("Erro ao carregar avaliadores");
     console.error(err);
+    alert("Erro ao carregar avaliadores");
   });
-
-/* =====================
-   AO SELECIONAR CANDIDATO
-===================== */
-document.getElementById("codCandidato").addEventListener("change", () => {
-  const codigo = document.getElementById("codCandidato").value;
-  const c = candidatos.find(x => String(x.codigo) === String(codigo));
-  if (!c) return;
-
-  document.getElementById("concorrente").innerText = c.concorrente || "";
-  document.getElementById("categoria").innerText   = c.categoria || "";
-  document.getElementById("entidade").innerText    = c.entidade || "";
-  document.getElementById("municipio").innerText   = c.municipio || "";
-  document.getElementById("rt").innerText          = c.rt || "";
-});
-
 
 /* ===== CÁLCULO ===== */
 function v(id){
@@ -236,6 +255,7 @@ function salvar(){
 
 </body>
 </html>
+
 
 
 
