@@ -278,6 +278,8 @@ Observações:
          oninput="limitarDecimal(this, 4.0)"
          onblur="formatarDecimal(this)">
 </div>
+Observações:
+<textarea id="obsInter"></textarea>
 </div>
 
 
@@ -391,7 +393,6 @@ function limitarDecimal(campo, max){
     .replace(',', '.')
     .replace(/[^0-9.]/g, '');
 
-  // evita dois pontos decimais
   const partes = valor.split('.');
   if (partes.length > 2) {
     valor = partes[0] + '.' + partes[1];
@@ -399,7 +400,7 @@ function limitarDecimal(campo, max){
 
   let num = parseFloat(valor);
 
-  if (!isNaN(num) && num > max) {
+  if (!isNaN(num) && max !== undefined && num > max) {
     alert(`Valor máximo permitido: ${max.toFixed(2).replace('.', ',')}`);
     campo.value = max.toString().replace('.', ',');
     calc();
@@ -574,6 +575,7 @@ function salvar(){
 
 </body>
 </html>
+
 
 
 
