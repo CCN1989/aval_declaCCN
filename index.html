@@ -127,18 +127,6 @@ input[type=number] {
 </head>
 
 <body>
-
-  <!-- ================= LOGIN ================= -->
-<div id="loginBox" style="position:fixed;inset:0;background:#9c8a8a;display:flex;align-items:center;justify-content:center;z-index:9999">
-  <div style="background:#ffe066;border:3px solid #000;padding:25px;width:360px;text-align:center">
-    <h2>Acesso do Avaliador</h2>
-    <input id="usuario" placeholder="Usuário"><br><br>
-    <input id="senha" type="password" placeholder="Senha"><br><br>
-    <button onclick="fazerLogin()">Entrar</button>
-    <div id="erroLogin" style="color:red;margin-top:10px"></div>
-  </div>
-</div>
-
 <div class="container">
 
 <!-- CABEÇALHO -->
@@ -380,12 +368,10 @@ Nota Final<br>
 
 <!-- LINHA INFERIOR 2 -->
 <div class="grid-rodape">
-  <div class="box">Data / Hora<br><span id="data"></span></div>
-  <div class="box">
-    Avaliador:<br>
-    <select id="avaliador"></select><br><br>
-    <button onclick="encerrarSessao()" style="background:#c62828;color:#fff">Encerrar Sessão</button>
-  </div>
+<div class="box">Data / Hora<br><span id="data"></span></div>
+<div class="box">Avaliador:<br>
+<select id="avaliador"><option value="">Selecione o avaliador*</option></select>
+</div>
 </div>
 
 <div class="btns">
@@ -395,45 +381,9 @@ Nota Final<br>
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbxMftBfAA2-S3ANOk_t1ZXLwsCR9cOuA_L8K-_iiq5OQQqO491LKS0GcMvK11q568iW/exec";
+const URL = "https://script.google.com/macros/s/AKfycbxCs5U9Q2iuZzNb_Z040bP8pvrwvX3MHkc4xUY9F_-qnOlRuP6v_2UDfJW2M3zS-sY/exec";
 
-
-/* ================= LOGIN ================= */
-function fazerLogin(){
-  fetch(URL,{
-    method:"POST",
-    body:JSON.stringify({
-      acao:"login",
-      usuario:usuario.value.trim(),
-      senha:senha.value.trim()
-    })
-  })
-  .then(r=>r.json())
-  .then(r=>{
-    if(r.status==="OK"){
-      localStorage.setItem("avaliadorNome", r.nome);
-      aplicarSessao(r.nome);
-    }else erroLogin.textContent = r.msg;
-  });
-}
-
-function aplicarSessao(nome){
-  loginBox.style.display="none";
-  avaliador.innerHTML = `<option value="${nome}">${nome}</option>`;
-  avaliador.value = nome;
-  avaliador.disabled = true;
-}
-
-function encerrarSessao(){
-  if(confirm("Encerrar sessão do avaliador?")){
-    localStorage.clear();
-    location.reload();
-  }
-}
-
-if(localStorage.getItem("avaliadorNome")){
-  aplicarSessao(localStorage.getItem("avaliadorNome"));
-}
+let candidatos = [];
 
 /* =========================
    FUNÇÕES DE INPUT (CORRETAS)
