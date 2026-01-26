@@ -5,9 +5,8 @@
 <title>Avaliação – Declamação</title>
 
 <style>
-/* Seus estilos originais mantidos */
 body{font-family:Arial;background:#9c8a8a;margin:0;padding:10px}
-.container{max-width:1200px;margin:auto;background:#fff;border:2px solid #000; display:none;} /* Escondido até logar */
+.container{max-width:1200px;margin:auto;background:#fff;border:2px solid #000; display:none;} 
 .header{background:#ffe066;border-bottom:2px solid #000;padding:10px}
 
 /* TELA DE LOGIN */
@@ -32,23 +31,32 @@ body{font-family:Arial;background:#9c8a8a;margin:0;padding:10px}
     font-weight: bold;
 }
 
-/* Resto dos seus estilos */
+/* GRID E BOXES */
 .linha{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:5px;padding:5px;background:#ffe066}
 .grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;padding:5px}
 .box{border:2px solid #000;background:#ffe066;padding:5px;font-size:13px}
 .box h3{text-align:center;margin:0 0 5px}
-textarea{width:100%;height:60px}
+textarea{width:100%;height:60px; margin-top: 5px;}
 .notaFinal{font-size:22px;font-weight:bold;text-align:center}
 select,input{width:100%}
 .linha-nota{display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .linha-nota .pontilhado{flex:1;border-bottom:1px dotted #000}
-.input-nota{width:42px;text-align:center}
+
+/* AJUSTE DOS INPUTS NUMÉRICOS */
+.input-nota{
+    width: 55px; 
+    text-align: center; 
+    font-weight: bold; 
+    padding: 3px;
+    border: 1px solid #000;
+}
+
 .resumo-direita{display:flex;justify-content:space-between;font-weight:bold;margin-top:6px;border-top:1px solid #000;padding-top:4px}
 .grid-inferior{display:grid;grid-template-columns:1.6fr 2.4fr 0.8fr;gap:6px;padding:6px}
 .grid-rodape{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px}
 .btns{display:flex;justify-content:center;padding:15px;gap: 20px;}
 button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
-.texto-interp{text-align:center;font-size:13px;line-height:1.4;}
+.texto-interp{text-align:center;font-size:11px;line-height:1.3; background: #fff; padding: 5px; border: 1px solid #000;}
 .btn-salvar{background:#fc7a00;color:#020202;border:2px solid #000;border-radius:6px;}
 .btn-logout{background:#ff4444; color:#fff; border:2px solid #000; border-radius:6px; font-size: 12px !important; padding: 5px 15px !important;}
 </style>
@@ -93,28 +101,34 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
 
 <div style="padding:8px;background:#ffe066;border-bottom:2px solid #000">
 <b>Poema:</b><br>
-<input id="poema" type="text">
+<input id="poema" type="text" placeholder="Nome do Poema">
 </div>
 
 <div class="grid">
     <div class="box">
         <h3>Fundamento da Voz (3,00)</h3>
         <h3>(Descontos)</h3>
-        <div class="linha-nota"><span class="texto">Imposição (0,5)</span><span class="pontilhado"></span><input id="voz1" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
-        <div class="linha-nota"><span class="texto">Dicção (0,5)</span><span class="pontilhado"></span><input id="voz2" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
-        <div class="linha-nota"><span class="texto">Inflexão (0,5)</span><span class="pontilhado"></span><input id="voz3" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
+        <div class="linha-nota"><span>Imposição (0,5)</span><span class="pontilhado"></span>
+            <input id="voz1" class="input-nota" oninput="limitarDecimal(this, 0.5)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
+        <div class="linha-nota"><span>Dicção (0,5)</span><span class="pontilhado"></span>
+            <input id="voz2" class="input-nota" oninput="limitarDecimal(this, 0.5)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
+        <div class="linha-nota"><span>Inflexão (0,5)</span><span class="pontilhado"></span>
+            <input id="voz3" class="input-nota" oninput="limitarDecimal(this, 0.5)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
         <div class="resumo-direita"><span>DESC: <b id="descVoz">0,00</b></span><span>Nota: <b id="notaVoz">3,00</b></span></div>
-        <textarea id="obsVoz" placeholder="Obs Voz"></textarea>
+        <textarea id="obsVoz" placeholder="Observações Voz"></textarea>
     </div>
 
     <div class="box">
         <h3>Expressão Corporal (2,00)</h3>
         <h3>(Descontos)</h3>
-        <div class="linha-nota"><span class="texto">Facial (0,3)</span><span class="pontilhado"></span><input id="exp1" class="input-nota" oninput="limitarDecimal(this, 0.3)"></div>
-        <div class="linha-nota"><span class="texto">Gestual (0,3)</span><span class="pontilhado"></span><input id="exp2" class="input-nota" oninput="limitarDecimal(this, 0.3)"></div>
-        <div class="linha-nota"><span class="texto">Postura (0,4)</span><span class="pontilhado"></span><input id="exp3" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
+        <div class="linha-nota"><span>Facial (0,3)</span><span class="pontilhado"></span>
+            <input id="exp1" class="input-nota" oninput="limitarDecimal(this, 0.3)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
+        <div class="linha-nota"><span>Gestual (0,3)</span><span class="pontilhado"></span>
+            <input id="exp2" class="input-nota" oninput="limitarDecimal(this, 0.3)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
+        <div class="linha-nota"><span>Postura (0,4)</span><span class="pontilhado"></span>
+            <input id="exp3" class="input-nota" oninput="limitarDecimal(this, 0.4)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
         <div class="resumo-direita"><span>DESC: <b id="descExp">0,00</b></span><span>Nota: <b id="notaExp">2,00</b></span></div>
-        <textarea id="obsExp" placeholder="Obs Expressão"></textarea>
+        <textarea id="obsExp" placeholder="Observações Expressão"></textarea>
     </div>
 
     <div class="box">
@@ -128,28 +142,32 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
 -Suficiente: (2,10 à 2,50)<br>
 -Não terminou, etc.: (0 à 2,00)<br>
 </div>
-        <div class="linha-nota"><span class="texto">Nota</span><span class="pontilhado"></span><input id="notaInter" class="input-nota" oninput="limitarDecimal(this, 4.0)"></div>
-        <textarea id="obsInter" placeholder="Obs Interpretação"></textarea>
+        <div class="linha-nota" style="margin-top:10px;"><span class="texto">Nota</span><span class="pontilhado"></span>
+            <input id="notaInter" class="input-nota" oninput="limitarDecimal(this, 4.0)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
+        <textarea id="obsInter" placeholder="Observações Interpretação"></textarea>
     </div>
 
     <div class="box">
         <h3>Fidelidade ao Texto (1,00)</h3>
         <h3>(Descontos)</h3>
-        <div class="linha-nota"><span class="texto">Letra (0,2)</span><span class="pontilhado"></span><input id="fid1" class="input-nota" oninput="limitarDecimal(this, 0.2)"></div>
-        <div class="linha-nota"><span class="texto">Verso (0,4)</span><span class="pontilhado"></span><input id="fid2" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
-        <div class="linha-nota"><span class="texto">Esqueceu (0,4)</span><span class="pontilhado"></span><input id="fid3" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
+        <div class="linha-nota"><span>Letra (0,2)</span><span class="pontilhado"></span>
+            <input id="fid1" class="input-nota" oninput="limitarDecimal(this, 0.2)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
+        <div class="linha-nota"><span>Verso (0,4)</span><span class="pontilhado"></span>
+            <input id="fid2" class="input-nota" oninput="limitarDecimal(this, 0.4)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
+        <div class="linha-nota"><span>Esqueceu (0,4)</span><span class="pontilhado"></span>
+            <input id="fid3" class="input-nota" oninput="limitarDecimal(this, 0.4)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
         <div class="resumo-direita"><span>DESC: <b id="descFid">0,00</b></span><span>Nota: <b id="notaFid">1,00</b></span></div>
-        <textarea id="obsFid" placeholder="Obs Fidelidade"></textarea>
+        <textarea id="obsFid" placeholder="Observações Fidelidade"></textarea>
     </div>
 </div>
 
 <div class="grid-inferior">
     <div class="box">
         <b>Descontos:</b><br>
-        <div class="linha-nota">Tempo: <input id="descTempo" class="input-nota" oninput="limitarDecimal(this)"></div>
-        <div class="linha-nota">Indum: <input id="descInd" class="input-nota" oninput="limitarDecimal(this, 2.0)"></div>
+        <div class="linha-nota">Tempo: <input id="descTempo" class="input-nota" oninput="limitarDecimal(this)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
+        <div class="linha-nota">Indum: <input id="descInd" class="input-nota" oninput="limitarDecimal(this, 2.0)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
     </div>
-    <div class="box"><b>Observações Gerais:</b><textarea id="obsGeral"></textarea></div>
+    <div class="box"><b>Observações Gerais:</b><textarea id="obsGeral" style="height:45px"></textarea></div>
     <div class="box notaFinal">Nota Final<br><span id="notaFinal">6,00</span></div>
 </div>
 
@@ -166,25 +184,20 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbxsvnEDoBpgHL9DxGvN1RUkXdAoJGxYgx6Za__MFHTmRcZ5sUrgLdCvvLIipjUbZlP1/exec";
+const URL = "https://script.google.com/macros/s/AKfycbxQ-4lJIRq0A20YB9bh5-CCyEBc8H8de0_RVV2nfq2VtFGJzGf4vPcV3ZzorUjP9JiT/exec";
 
 // --- CONTROLE DE SESSÃO ---
 window.onload = () => {
     const userLogado = localStorage.getItem("avaliadorDados");
-    if(userLogado) {
-        exibirSistema(JSON.parse(userLogado));
-    }
+    if(userLogado) { exibirSistema(JSON.parse(userLogado)); }
 };
 
 function fazerLogin() {
     const u = document.getElementById("userLogin").value;
     const p = document.getElementById("passLogin").value;
     const btn = document.getElementById("btnLogin");
-
     if(!u || !p) { alert("Preencha tudo!"); return; }
-    
-    btn.disabled = true;
-    btn.innerText = "VERIFICANDO...";
+    btn.disabled = true; btn.innerText = "VERIFICANDO...";
 
     fetch(`${URL}?acao=login&user=${u}&pass=${p}`)
     .then(r => r.json())
@@ -193,24 +206,14 @@ function fazerLogin() {
             localStorage.setItem("avaliadorDados", JSON.stringify(res));
             exibirSistema(res);
         } else {
-            alert(res.msg);
-            btn.disabled = false;
-            btn.innerText = "ENTRAR";
+            alert(res.msg); btn.disabled = false; btn.innerText = "ENTRAR";
         }
-    })
-    .catch(() => {
-        alert("Erro de conexão");
-        btn.disabled = false;
-        btn.innerText = "ENTRAR";
-    });
+    }).catch(() => { alert("Erro de conexão"); btn.disabled = false; btn.innerText = "ENTRAR"; });
 }
 
 function exibirSistema(dados) {
-    console.log("Dados recebidos:", dados); // Isso ajuda a testar no F12 do navegador
     document.getElementById("telaLogin").style.display = "none";
     document.getElementById("appContainer").style.display = "block";
-    
-    // Se no console aparecer 'nome', usamos dados.nome
     document.getElementById("nomeExibicao").innerText = dados.nome || "Não identificado";
     carregarCandidatos();
 }
@@ -222,23 +225,36 @@ function logout() {
     }
 }
 
-// --- LÓGICA DO FORMULÁRIO ---
+// --- LÓGICA DE FORMATAÇÃO ---
 
 function limitarDecimal(campo, max){
+    // Permite apenas números e o separador
     let valor = campo.value.replace(',', '.').replace(/[^0-9.]/g, '');
     let num = parseFloat(valor);
     if (!isNaN(num) && max !== undefined && num > max) {
-        alert("Máximo: " + max);
-        campo.value = max;
+        alert("Máximo permitido: " + max.toFixed(2).replace('.', ','));
+        campo.value = max.toFixed(2).replace('.', ',');
     } else {
         campo.value = valor.replace('.', ',');
     }
     calc();
 }
 
+function formatarDecimal(campo) {
+    let valor = campo.value.replace(',', '.');
+    let num = parseFloat(valor);
+    if (isNaN(num)) {
+        campo.value = "0,00";
+    } else {
+        campo.value = num.toFixed(2).replace('.', ',');
+    }
+    calc();
+}
+
 function v(id){
     const el = document.getElementById(id);
-    return (el && el.value) ? parseFloat(el.value.replace(',', '.')) || 0 : 0;
+    if(!el || !el.value) return 0;
+    return parseFloat(el.value.replace(',', '.')) || 0;
 }
 
 function calc(){
@@ -249,6 +265,7 @@ function calc(){
     document.getElementById("descVoz").innerText = dv.toFixed(2).replace('.', ',');
     document.getElementById("descExp").innerText = de.toFixed(2).replace('.', ',');
     document.getElementById("descFid").innerText = df.toFixed(2).replace('.', ',');
+    
     document.getElementById("notaVoz").innerText = (3 - dv).toFixed(2).replace('.', ',');
     document.getElementById("notaExp").innerText = (2 - de).toFixed(2).replace('.', ',');
     document.getElementById("notaFid").innerText = (1 - df).toFixed(2).replace('.', ',');
@@ -257,6 +274,8 @@ function calc(){
     document.getElementById("notaFinal").innerText = final.toFixed(2).replace('.', ',');
     document.getElementById("data").innerText = new Date().toLocaleString();
 }
+
+// --- DADOS ---
 
 let candidatos = [];
 function carregarCandidatos() {
@@ -282,12 +301,11 @@ document.getElementById("codCandidato").onchange = function() {
 
 function salvar(){
     const user = JSON.parse(localStorage.getItem("avaliadorDados"));
-    if(!v('notaInter')) { alert("Informe a nota de Interpretação!"); return; }
+    if(!document.getElementById("notaInter").value) { alert("Informe a nota de Interpretação!"); return; }
     if(!document.getElementById("codCandidato").value) { alert("Selecione o candidato!"); return; }
 
     const btn = document.querySelector(".btn-salvar");
-    btn.disabled = true;
-    btn.innerText = "SALVANDO...";
+    btn.disabled = true; btn.innerText = "SALVANDO...";
 
     const payload = {
         usuarioLogin: user.usuario, 
@@ -310,18 +328,13 @@ function salvar(){
     .then(r => r.json())
     .then(res => {
         if(res.status === "OK") {
-            alert("Salvo com sucesso!");
+            alert("Avaliação salva com sucesso!");
             location.reload();
         } else {
-            alert("Erro: " + res.msg);
-            btn.disabled = false;
+            alert("Erro: " + res.msg); btn.disabled = false; btn.innerText = "SALVAR AVALIAÇÃO";
         }
     });
 }
 </script>
 </body>
 </html>
-
-
-
-
