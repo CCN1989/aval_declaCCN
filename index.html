@@ -195,9 +195,12 @@ function fazerLogin() {
 }
 
 function exibirSistema(dados) {
+    console.log("Dados recebidos:", dados); // Isso ajuda a testar no F12 do navegador
     document.getElementById("telaLogin").style.display = "none";
     document.getElementById("appContainer").style.display = "block";
-    document.getElementById("nomeExibicao").innerText = dados.nome;
+    
+    // Se no console aparecer 'nome', usamos dados.nome
+    document.getElementById("nomeExibicao").innerText = dados.nome || "Não identificado";
     carregarCandidatos();
 }
 
@@ -307,4 +310,5 @@ function salvar(){
 </script>
 </body>
 </html>
+
 
