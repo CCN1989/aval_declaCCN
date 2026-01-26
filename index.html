@@ -71,18 +71,19 @@ select,input{width:100%}
   padding:6px
 }
 
-/* ===== LINHA INFERIOR 2 ===== */
-.grid-rodape{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  padding:6px
-}
-.btns{
-  display:flex;
-  justify-content:center;
-  padding:15px;
-}
+<!-- LINHA INFERIOR 2 -->
+<div class="grid-rodape">
+  <div class="box">
+    Data / Hora<br>
+    <span id="data"></span>
+  </div>
+
+  <div class="box">
+    Avaliador:<br>
+    <b id="avaliadorLogado"></b>
+  </div>
+</div>
+
 
 /* ===== BOTÃO ===== */
 .btns button{
@@ -388,9 +389,6 @@ Nota Final<br>
 <!-- LINHA INFERIOR 2 -->
 <div class="grid-rodape">
 <div class="box">Data / Hora<br><span id="data"></span></div>
-<div class="box">Avaliador:<br>
-<select id="avaliador"><option value="">Selecione o avaliador*</option></select>
-</div>
 </div>
 
 <div class="btns">
@@ -400,6 +398,8 @@ Nota Final<br>
 </div>
 
 <script>
+let nomeAvaliador = "";
+
 const URL = "https://script.google.com/macros/s/AKfycbyxIsT4cTvnIrM1SdAUG1LWocp9MIo7SJcBT6sAwqxGBOzdaTaVnkZ9GlQc9QxHJJe8/exec";
 
 let candidatos = [];
@@ -476,16 +476,6 @@ function calc(){
 /* =========================
    CARREGAR CANDIDATOS
 ========================= */
-fetch(URL + "?acao=candidatos")
-  .then(r => r.json())
-  .then(lista => {
-    candidatos = lista;
-    const sel = document.getElementById("codCandidato");
-    sel.innerHTML = `<option value="">Selecione CODIGO do candidato *</option>`;
-    lista.forEach(c => {
-      sel.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`;
-    });
-  });
 
 document.getElementById("codCandidato").addEventListener("change", () => {
   const codigo = codCandidato.value;
@@ -522,11 +512,6 @@ function salvar(){
     return;
   }
 
-  if(!avaliador.value){
-    alert("Selecione o avaliador");
-    return;
-  }
-
   // 🔴 INTERPRETAÇÃO OBRIGATÓRIA
   if(notaInter.value.trim() === ""){
     alert("Informe a nota de Interpretação");
@@ -543,9 +528,9 @@ function salvar(){
   }
 
   fetch(URL, {
-    method: "POST",
-    body: JSON.stringify({
-      token: localStorage.getItem("tokenAvaliador"),
+  method: "POST",
+  body: JSON.stringify({
+    token: localStorage.getItem("tokenAvaliador"),
       cod: codCandidato.value,
       concorrente: concorrente.textContent,
       categoria: categoria.textContent,
@@ -576,7 +561,6 @@ function salvar(){
       obsGeral: obsGeral.value,
 
       notaFinal: notaFinal.textContent,
-      avaliador: avaliador.value,
       data: new Date().toLocaleString()
     })
   })
@@ -594,7 +578,7 @@ function salvar(){
 // mantém sessão
 const tokenSalvo = localStorage.getItem("tokenAvaliador");
 if(tokenSalvo){
-  liberarSistema(tokenSalvo);
+  liberarSistema();
 }
 
 function fazerLogin(){
@@ -609,18 +593,25 @@ function fazerLogin(){
   .then(r => r.json())
   .then(r => {
     if(r.status === "OK"){
-      localStorage.setItem("tokenAvaliador", r.token);
-      liberarSistema(r.token);
+  localStorage.setItem("tokenAvaliador", r.token);
+  localStorage.setItem("nomeAvaliador", r.nome);
+  liberarSistema();
+}
+
     } else {
       erroLogin.textContent = r.msg;
     }
   });
 }
 
-function liberarSistema(token){
+function liberarSistema(){
   document.getElementById("loginBox").style.display = "none";
   document.getElementById("sistema").style.display = "block";
+
+  nomeAvaliador = localStorage.getItem("nomeAvaliador") || "";
+  document.getElementById("avaliadorLogado").textContent = nomeAvaliador;
 }
+
 
 </script>
 Planilha de Avaliação | V.03.2026
@@ -630,6 +621,7 @@ Planilha de Avaliação | V.03.2026
 
 </body>
 </html>
+
 
 
 
