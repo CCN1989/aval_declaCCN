@@ -99,6 +99,7 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
 <div class="grid">
     <div class="box">
         <h3>Fundamento da Voz (3,00)</h3>
+        <h3>(Descontos)</h3>
         <div class="linha-nota"><span class="texto">Imposição (0,5)</span><span class="pontilhado"></span><input id="voz1" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
         <div class="linha-nota"><span class="texto">Dicção (0,5)</span><span class="pontilhado"></span><input id="voz2" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
         <div class="linha-nota"><span class="texto">Inflexão (0,5)</span><span class="pontilhado"></span><input id="voz3" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
@@ -108,6 +109,7 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
 
     <div class="box">
         <h3>Expressão Corporal (2,00)</h3>
+        <h3>(Descontos)</h3>
         <div class="linha-nota"><span class="texto">Facial (0,3)</span><span class="pontilhado"></span><input id="exp1" class="input-nota" oninput="limitarDecimal(this, 0.3)"></div>
         <div class="linha-nota"><span class="texto">Gestual (0,3)</span><span class="pontilhado"></span><input id="exp2" class="input-nota" oninput="limitarDecimal(this, 0.3)"></div>
         <div class="linha-nota"><span class="texto">Postura (0,4)</span><span class="pontilhado"></span><input id="exp3" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
@@ -117,13 +119,22 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
 
     <div class="box">
         <h3>Interpretação (4,00)</h3>
-        <div class="texto-interp">Excel.: 3,6-4,0 | Bom: 3,1-3,5 | Reg.: 2,6-3,0</div>
+        <h3>(Acréscimo)</h3>
+        <div class="texto-interp">
+(interação com o texto, transmissão da mensagem, comunicação, dinâmica, pontuação / acentuação)<br>
+-Excelente: (3,60 à 4,00)<br>
+-Bom: (3,10 à 3,50)<br>
+-Regular: (2,60 à 3,00)<br>
+-Suficiente: (2,10 à 2,50)<br>
+-Não terminou, etc.: (0 à 2,00)<br>
+</div>
         <div class="linha-nota"><span class="texto">Nota</span><span class="pontilhado"></span><input id="notaInter" class="input-nota" oninput="limitarDecimal(this, 4.0)"></div>
         <textarea id="obsInter" placeholder="Obs Interpretação"></textarea>
     </div>
 
     <div class="box">
         <h3>Fidelidade ao Texto (1,00)</h3>
+        <h3>(Descontos)</h3>
         <div class="linha-nota"><span class="texto">Letra (0,2)</span><span class="pontilhado"></span><input id="fid1" class="input-nota" oninput="limitarDecimal(this, 0.2)"></div>
         <div class="linha-nota"><span class="texto">Verso (0,4)</span><span class="pontilhado"></span><input id="fid2" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
         <div class="linha-nota"><span class="texto">Esqueceu (0,4)</span><span class="pontilhado"></span><input id="fid3" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
@@ -155,7 +166,7 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbwnZ3gcodKO_WMH7vRsp8OwvQiMwrb4bHE8Z4sBDrh1qQSGTj4EnynsRuHtXIKZFPGm/exec";
+const URL = "https://script.google.com/macros/s/AKfycbxYm3pG4bGktcSSwEUADOrKqu3a-B8V2L40ewSuk7XmuDud_pgGjgbaBidJ0CZuWPwl/exec";
 
 // --- CONTROLE DE SESSÃO ---
 window.onload = () => {
@@ -310,5 +321,6 @@ function salvar(){
 </script>
 </body>
 </html>
+
 
 
