@@ -199,20 +199,78 @@ function logout(){
   location.reload();
 }
 
+<script>
 function salvar(){
-  fetch(URL,{
-    method:"POST",
-    body:JSON.stringify({
-      token:localStorage.getItem("tokenAvaliador"),
-      avaliador:localStorage.getItem("nomeAvaliador"),
-      notaFinal:notaFinal.textContent,
-      data:new Date().toLocaleString()
+
+  if(!localStorage.getItem("tokenAvaliador")){
+    alert("Sessão expirada. Faça login novamente.");
+    location.reload();
+    return;
+  }
+
+  fetch(URL, {
+    method: "POST",
+    body: JSON.stringify({
+      token: localStorage.getItem("tokenAvaliador"),
+
+      cod: codCandidato.value,
+      concorrente: concorrente.textContent,
+      categoria: categoria.textContent,
+      entidade: entidade.textContent,
+      municipio: municipio.textContent,
+      rt: rt.textContent,
+
+      voz1: v('voz1'),
+      voz2: v('voz2'),
+      voz3: v('voz3'),
+      obsVoz: obsVoz.value,
+
+      exp1: v('exp1'),
+      exp2: v('exp2'),
+      exp3: v('exp3'),
+      obsExp: obsExp.value,
+
+      notaInter: v('notaInter'),
+      obsInter: obsInter.value,
+
+      fid1: v('fid1'),
+      fid2: v('fid2'),
+      fid3: v('fid3'),
+      obsFid: obsFid.value,
+
+      descTempo: v('descTempo'),
+      descInd: v('descInd'),
+      obsGeral: obsGeral.value,
+
+      notaFinal: notaFinal.textContent,
+      data: new Date().toLocaleString()
     })
-  }).then(()=>alert("Avaliação salva"));
+  })
+  .then(r => r.json())
+  .then(r => {
+    if(r.status === "OK"){
+      alert("Avaliação salva com sucesso");
+      location.reload();
+    } else {
+      alert(r.msg || "Erro ao salvar");
+    }
+  });
 }
+<button onclick="logout()">Sair</button>
+
+<script>
+function logout(){
+  localStorage.clear();
+  location.reload();
+}
+</script>
+
+</script>
+
 
 if(localStorage.getItem("tokenAvaliador")) liberarSistema();
 </script>
 
 </body>
 </html>
+
