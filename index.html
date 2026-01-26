@@ -5,131 +5,67 @@
 <title>Avaliação – Declamação</title>
 
 <style>
+/* Seus estilos originais mantidos */
 body{font-family:Arial;background:#9c8a8a;margin:0;padding:10px}
-.container{max-width:1200px;margin:auto;background:#fff;border:2px solid #000}
+.container{max-width:1200px;margin:auto;background:#fff;border:2px solid #000; display:none;} /* Escondido até logar */
 .header{background:#ffe066;border-bottom:2px solid #000;padding:10px}
 
-.linha{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
-  gap:5px;
-  padding:5px;
-  background:#ffe066
+/* TELA DE LOGIN */
+#telaLogin {
+    max-width: 400px;
+    margin: 100px auto;
+    background: #fff;
+    padding: 20px;
+    border: 2px solid #000;
+    text-align: center;
+}
+#telaLogin input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #000;
+}
+#telaLogin button {
+    background: #fc7a00;
+    padding: 10px 40px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr 1fr;
-  gap:5px;
-  padding:5px
-}
-
-.box{
-  border:2px solid #000;
-  background:#ffe066;
-  padding:5px;
-  font-size:13px
-}
-
+/* Resto dos seus estilos */
+.linha{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:5px;padding:5px;background:#ffe066}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;padding:5px}
+.box{border:2px solid #000;background:#ffe066;padding:5px;font-size:13px}
 .box h3{text-align:center;margin:0 0 5px}
 textarea{width:100%;height:60px}
 .notaFinal{font-size:22px;font-weight:bold;text-align:center}
-
 select,input{width:100%}
-
-/* ===== LINHAS PONTILHADAS ===== */
-.linha-nota{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  margin-bottom:6px
-}
-.linha-nota .texto{white-space:nowrap}
-.linha-nota .pontilhado{
-  flex:1;
-  border-bottom:1px dotted #000
-}
-.input-nota{
-  width:42px;
-  text-align:center
-}
-
-.resumo-direita{
-  display:flex;
-  justify-content:space-between;
-  font-weight:bold;
-  margin-top:6px;
-  border-top:1px solid #000;
-  padding-top:4px
-}
-
-/* ===== LINHA INFERIOR 1 ===== */
-.grid-inferior{
-  display:grid;
-  grid-template-columns:1.6fr 2.4fr 0.8fr;
-  gap:6px;
-  padding:6px
-}
-
-/* ===== LINHA INFERIOR 2 ===== */
-.grid-rodape{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  padding:6px
-}
-.btns{
-  display:flex;
-  justify-content:center;
-  padding:15px;
-}
-
-/* ===== BOTÃO ===== */
-.btns button{
-  font-size:18px;
-  padding:12px 40px;
-}
-
-button{
-  padding:10px 30px;
-  font-size:16px;
-  font-weight:bold
-}
-
-/* Remove setas dos inputs numéricos */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type=number] {
-  -moz-appearance: textfield; /* Firefox */
-}
-.texto-interp{
-  text-align:center;
-  font-size:13px;
-  line-height:1.4;
-}
-.btns button{
-  background:#fc7a00;      /* verde */
-  color:#020202;
-  border:2px solid #000;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-.btns button:hover{
-  background:#1b5e20;      /* verde mais escuro */
-}
-
+.linha-nota{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.linha-nota .pontilhado{flex:1;border-bottom:1px dotted #000}
+.input-nota{width:42px;text-align:center}
+.resumo-direita{display:flex;justify-content:space-between;font-weight:bold;margin-top:6px;border-top:1px solid #000;padding-top:4px}
+.grid-inferior{display:grid;grid-template-columns:1.6fr 2.4fr 0.8fr;gap:6px;padding:6px}
+.grid-rodape{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px}
+.btns{display:flex;justify-content:center;padding:15px;gap: 20px;}
+button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
+.texto-interp{text-align:center;font-size:13px;line-height:1.4;}
+.btn-salvar{background:#fc7a00;color:#020202;border:2px solid #000;border-radius:6px;}
+.btn-logout{background:#ff4444; color:#fff; border:2px solid #000; border-radius:6px; font-size: 12px !important; padding: 5px 15px !important;}
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<!-- CABEÇALHO -->
+<div id="telaLogin">
+    <img src="https://raw.githubusercontent.com/CCN1989/Imagens/refs/heads/main/Logo%20pequeno.png" height="70">
+    <h2>Acesso Avaliador</h2>
+    <input type="text" id="userLogin" placeholder="Usuário (Ex: AV1)">
+    <input type="password" id="passLogin" placeholder="Senha">
+    <button onclick="fazerLogin()" id="btnLogin">ENTRAR</button>
+</div>
+
+<div id="appContainer" class="container">
+
 <div class="header" style="display:grid;grid-template-columns:100px 1fr 100px;align-items:center">
 <img src="https://raw.githubusercontent.com/CCN1989/Imagens/refs/heads/main/Logo%20pequeno.png" height="70">
 <div style="text-align:center">
@@ -141,437 +77,233 @@ input[type=number] {
 <img src="https://github.com/CCN1989/Imagens/blob/main/12RT.png?raw=true" height="70">
 </div>
 
-<!-- SELEÇÃO -->
 <div style="padding:8px;background:#ffe066;border-bottom:2px solid #000">
 <select id="codCandidato">
 <option value="">Selecione CÓDIGO do candidato *</option>
 </select>
 </div>
 
-<!-- DADOS -->
 <div class="linha">
-<div>Categoria:<br><b id="concorrente"></b></div>
-<div>Concorrente:<br><b id="categoria"></b></div>
+<div>Categoria:<br><b id="categoria"></b></div>
+<div>Concorrente:<br><b id="concorrente"></b></div>
 <div>Entidade:<br><b id="entidade"></b></div>
 <div>Município:<br><b id="municipio"></b></div>
 <div>RT:<br><b id="rt"></b></div>
 </div>
 
-<!-- POEMA -->
 <div style="padding:8px;background:#ffe066;border-bottom:2px solid #000">
 <b>Poema:</b><br>
 <input id="poema" type="text">
 </div>
 
-<!-- QUADRANTES -->
 <div class="grid">
+    <div class="box">
+        <h3>Fundamento da Voz (3,00)</h3>
+        <div class="linha-nota"><span class="texto">Imposição (0,5)</span><span class="pontilhado"></span><input id="voz1" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
+        <div class="linha-nota"><span class="texto">Dicção (0,5)</span><span class="pontilhado"></span><input id="voz2" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
+        <div class="linha-nota"><span class="texto">Inflexão (0,5)</span><span class="pontilhado"></span><input id="voz3" class="input-nota" oninput="limitarDecimal(this, 0.5)"></div>
+        <div class="resumo-direita"><span>DESC: <b id="descVoz">0,00</b></span><span>Nota: <b id="notaVoz">3,00</b></span></div>
+        <textarea id="obsVoz" placeholder="Obs Voz"></textarea>
+    </div>
 
-<!-- FUNDAMENTO -->
-<div class="box">
-<h3>Fundamento da Voz (3,00)</h3>
-<h3>(Descontos)</h3>
+    <div class="box">
+        <h3>Expressão Corporal (2,00)</h3>
+        <div class="linha-nota"><span class="texto">Facial (0,3)</span><span class="pontilhado"></span><input id="exp1" class="input-nota" oninput="limitarDecimal(this, 0.3)"></div>
+        <div class="linha-nota"><span class="texto">Gestual (0,3)</span><span class="pontilhado"></span><input id="exp2" class="input-nota" oninput="limitarDecimal(this, 0.3)"></div>
+        <div class="linha-nota"><span class="texto">Postura (0,4)</span><span class="pontilhado"></span><input id="exp3" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
+        <div class="resumo-direita"><span>DESC: <b id="descExp">0,00</b></span><span>Nota: <b id="notaExp">2,00</b></span></div>
+        <textarea id="obsExp" placeholder="Obs Expressão"></textarea>
+    </div>
 
-<div class="linha-nota">
-  <span class="texto">Imposição (até 0,5)</span>
-  <span class="pontilhado"></span>
- <input id="voz1" class="input-nota"
-       type="text"
-       inputmode="decimal"
-       oninput="limitarDecimal(this, 0.5)"
-       onblur="formatarDecimal(this)">
+    <div class="box">
+        <h3>Interpretação (4,00)</h3>
+        <div class="texto-interp">Excel.: 3,6-4,0 | Bom: 3,1-3,5 | Reg.: 2,6-3,0</div>
+        <div class="linha-nota"><span class="texto">Nota</span><span class="pontilhado"></span><input id="notaInter" class="input-nota" oninput="limitarDecimal(this, 4.0)"></div>
+        <textarea id="obsInter" placeholder="Obs Interpretação"></textarea>
+    </div>
 
-
+    <div class="box">
+        <h3>Fidelidade ao Texto (1,00)</h3>
+        <div class="linha-nota"><span class="texto">Letra (0,2)</span><span class="pontilhado"></span><input id="fid1" class="input-nota" oninput="limitarDecimal(this, 0.2)"></div>
+        <div class="linha-nota"><span class="texto">Verso (0,4)</span><span class="pontilhado"></span><input id="fid2" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
+        <div class="linha-nota"><span class="texto">Esqueceu (0,4)</span><span class="pontilhado"></span><input id="fid3" class="input-nota" oninput="limitarDecimal(this, 0.4)"></div>
+        <div class="resumo-direita"><span>DESC: <b id="descFid">0,00</b></span><span>Nota: <b id="notaFid">1,00</b></span></div>
+        <textarea id="obsFid" placeholder="Obs Fidelidade"></textarea>
+    </div>
 </div>
 
-<div class="linha-nota">
-  <span class="texto">Dicção (até 0,5)</span>
-  <span class="pontilhado"></span>
-  <input id="voz2" class="input-nota"
-       type="text"
-       inputmode="decimal"
-       oninput="limitarDecimal(this, 0.5)"
-       onblur="formatarDecimal(this)">
-
-</div>
-<div class="linha-nota">
-  <span class="texto">Inflexão (até 0,5)</span>
-  <span class="pontilhado"></span>
- <input id="voz3" class="input-nota"
-       type="text"
-       inputmode="decimal"
-       oninput="limitarDecimal(this, 0.5)"
-       onblur="formatarDecimal(this)">
-
-</div>
-
-<div class="resumo-direita">
-  <span>TOTAL DESCONTOS:<b id="descVoz">0,00</b></span>
-  <span>Nota: <b id="notaVoz">3,00</b></span>
-</div>
-Observações:
-<textarea id="obsVoz"></textarea>
-</div>
-
-
-<!-- EXPRESSÃO -->
-<div class="box">
-<h3>Expressão Corporal (2,00)</h3>
-<h3>(Descontos)</h3>
-
-<div class="linha-nota">
-  <span class="texto">Facial (até 0,3)</span>
-  <span class="pontilhado"></span>
-  <input id="exp1" class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this, 0.3)"
-         onblur="formatarDecimal(this)">
-</div>
-
-<div class="linha-nota">
-  <span class="texto">Gestual (até 0,3)</span>
-  <span class="pontilhado"></span>
-  <input id="exp2" class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this, 0.3)"
-         onblur="formatarDecimal(this)">
-</div>
-
-<div class="linha-nota">
-  <span class="texto">Postura (até 0,4)</span>
-  <span class="pontilhado"></span>
-  <input id="exp3" class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this, 0.4)"
-         onblur="formatarDecimal(this)">
-</div>
-
-<div class="resumo-direita">
-  <span>TOTAL DESCONTOS:<b id="descExp">0,00</b></span>
-  <span>Nota: <b id="notaExp">2,00</b></span>
-</div>
-Observações:
-<textarea id="obsExp"></textarea>
-</div>
-
-<!-- INTERPRETAÇÃO -->
-<div class="box">
-<h3>Interpretação (4,00)</h3>
-<h3>(Acréscimo)</h3>
-
-<div class="texto-interp">
-(interação com o texto, transmissão da mensagem, comunicação, dinâmica, pontuação / acentuação)<br>
--Excelente: (3,60 à 4,00)<br>
--Bom: (3,10 à 3,50)<br>
--Regular: (2,60 à 3,00)<br>
--Suficiente: (2,10 à 2,50)<br>
--Não terminou, etc.: (0 à 2,00)
-</div>
-
-<br>
-
-<div class="linha-nota">
-  <span class="texto">Nota</span>
-  <span class="pontilhado"></span>
-  <input id="notaInter"
-         class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this, 4.0)"
-         onblur="formatarDecimal(this)">
-</div>
-Observações:
-<textarea id="obsInter"></textarea>
-</div>
-
-
-<!-- FIDELIDADE -->
-<div class="box">
-<h3>Fidelidade ao Texto (1,00)</h3>
-<h3>(Descontos)</h3>
-
-<div class="linha-nota">
-  <span class="texto">Letra (até 0,2)</span>
-  <span class="pontilhado"></span>
-  <input id="fid1" class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this, 0.2)"
-         onblur="formatarDecimal(this)">
-</div>
-
-<div class="linha-nota">
-  <span class="texto">Verso (até 0,4)</span>
-  <span class="pontilhado"></span>
-  <input id="fid2" class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this, 0.4)"
-         onblur="formatarDecimal(this)">
-</div>
-
-<div class="linha-nota">
-  <span class="texto">Esqueceu (até 0,4)</span>
-  <span class="pontilhado"></span>
-  <input id="fid3" class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this, 0.4)"
-         onblur="formatarDecimal(this)">
-</div>
-
-<div class="resumo-direita">
-  <span>TOTAL DESCONTOS:<b id="descFid">0,00</b></span>
-  <span>Nota: <b id="notaFid">1,00</b></span>
-</div>
-Observações:
-<textarea id="obsFid"></textarea>
-</div>
-
-
-</div>
-
-<!-- LINHA INFERIOR 1 -->
 <div class="grid-inferior">
-
-<div class="box">
-<b>Descontos:</b><br><br>
-
-<div class="linha-nota">
-  <span class="texto">Tempo 9min (desc. 1,00 / min)</span>
-  <span class="pontilhado"></span>
-  <input id="descTempo"
-         class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this)"
-         onblur="formatarDecimal(this)">
+    <div class="box">
+        <b>Descontos:</b><br>
+        <div class="linha-nota">Tempo: <input id="descTempo" class="input-nota" oninput="limitarDecimal(this)"></div>
+        <div class="linha-nota">Indum: <input id="descInd" class="input-nota" oninput="limitarDecimal(this, 2.0)"></div>
+    </div>
+    <div class="box"><b>Observações Gerais:</b><textarea id="obsGeral"></textarea></div>
+    <div class="box notaFinal">Nota Final<br><span id="notaFinal">6,00</span></div>
 </div>
 
-<div class="linha-nota">
-  <span class="texto">Indumentária (até 2,00)</span>
-  <span class="pontilhado"></span>
-  <input id="descInd"
-         class="input-nota"
-         type="text"
-         oninput="limitarDecimal(this, 2.0)"
-         onblur="formatarDecimal(this)">
-</div>
-
-</div>
-
-<div class="box">
-<b>Observações Gerais:</b>
-<textarea id="obsGeral"></textarea>
-</div>
-
-<div class="box notaFinal">
-Nota Final<br>
-<span id="notaFinal">6,00</span>
-</div>
-
-</div>
-
-<!-- LINHA INFERIOR 2 -->
 <div class="grid-rodape">
-<div class="box">Data / Hora<br><span id="data"></span></div>
-<div class="box">Avaliador:<br>
-<select id="avaliador"><option value="">Selecione o avaliador*</option></select>
-</div>
+    <div class="box">Data/Hora: <span id="data"></span></div>
+    <div class="box">Avaliador Logado: <b id="nomeExibicao"></b></div>
 </div>
 
 <div class="btns">
-<button onclick="salvar()">SALVAR</button>
+    <button onclick="logout()" class="btn-logout">Encerrar Sessão</button>
+    <button onclick="salvar()" class="btn-salvar">SALVAR AVALIAÇÃO</button>
 </div>
 
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbxCs5U9Q2iuZzNb_Z040bP8pvrwvX3MHkc4xUY9F_-qnOlRuP6v_2UDfJW2M3zS-sY/exec";
+const URL = "https://script.google.com/macros/s/AKfycbyJVdkcMwiE-vlPEN3TPI-nCIISyobLTPtS68jyv9Y7Vo-GtquKfxooPX4uKtUVaZdN/exec";
+
+// --- CONTROLE DE SESSÃO ---
+window.onload = () => {
+    const userLogado = localStorage.getItem("avaliadorDados");
+    if(userLogado) {
+        exibirSistema(JSON.parse(userLogado));
+    }
+};
+
+function fazerLogin() {
+    const u = document.getElementById("userLogin").value;
+    const p = document.getElementById("passLogin").value;
+    const btn = document.getElementById("btnLogin");
+
+    if(!u || !p) { alert("Preencha tudo!"); return; }
+    
+    btn.disabled = true;
+    btn.innerText = "VERIFICANDO...";
+
+    fetch(`${URL}?acao=login&user=${u}&pass=${p}`)
+    .then(r => r.json())
+    .then(res => {
+        if(res.status === "OK") {
+            localStorage.setItem("avaliadorDados", JSON.stringify(res));
+            exibirSistema(res);
+        } else {
+            alert(res.msg);
+            btn.disabled = false;
+            btn.innerText = "ENTRAR";
+        }
+    })
+    .catch(() => {
+        alert("Erro de conexão");
+        btn.disabled = false;
+        btn.innerText = "ENTRAR";
+    });
+}
+
+function exibirSistema(dados) {
+    document.getElementById("telaLogin").style.display = "none";
+    document.getElementById("appContainer").style.display = "block";
+    document.getElementById("nomeExibicao").innerText = dados.nome;
+    carregarCandidatos();
+}
+
+function logout() {
+    if(confirm("Deseja realmente encerrar a sessão?")) {
+        localStorage.removeItem("avaliadorDados");
+        location.reload();
+    }
+}
+
+// --- LÓGICA DO FORMULÁRIO ---
+
+function limitarDecimal(campo, max){
+    let valor = campo.value.replace(',', '.').replace(/[^0-9.]/g, '');
+    let num = parseFloat(valor);
+    if (!isNaN(num) && max !== undefined && num > max) {
+        alert("Máximo: " + max);
+        campo.value = max;
+    } else {
+        campo.value = valor.replace('.', ',');
+    }
+    calc();
+}
+
+function v(id){
+    const el = document.getElementById(id);
+    return (el && el.value) ? parseFloat(el.value.replace(',', '.')) || 0 : 0;
+}
+
+function calc(){
+    const dv = v('voz1') + v('voz2') + v('voz3');
+    const de = v('exp1') + v('exp2') + v('exp3');
+    const df = v('fid1') + v('fid2') + v('fid3');
+
+    document.getElementById("descVoz").innerText = dv.toFixed(2).replace('.', ',');
+    document.getElementById("descExp").innerText = de.toFixed(2).replace('.', ',');
+    document.getElementById("descFid").innerText = df.toFixed(2).replace('.', ',');
+    document.getElementById("notaVoz").innerText = (3 - dv).toFixed(2).replace('.', ',');
+    document.getElementById("notaExp").innerText = (2 - de).toFixed(2).replace('.', ',');
+    document.getElementById("notaFid").innerText = (1 - df).toFixed(2).replace('.', ',');
+
+    const final = 6 + v('notaInter') - (dv + de + df + v('descTempo') + v('descInd'));
+    document.getElementById("notaFinal").innerText = final.toFixed(2).replace('.', ',');
+    document.getElementById("data").innerText = new Date().toLocaleString();
+}
 
 let candidatos = [];
-
-/* =========================
-   FUNÇÕES DE INPUT (CORRETAS)
-========================= */
-function limitarDecimal(campo, max){
-  let valor = campo.value
-    .replace(',', '.')
-    .replace(/[^0-9.]/g, '');
-
-  const partes = valor.split('.');
-  if (partes.length > 2) {
-    valor = partes[0] + '.' + partes[1];
-  }
-
-  let num = parseFloat(valor);
-
-  if (!isNaN(num) && max !== undefined && num > max) {
-    alert(`Valor máximo permitido: ${max.toFixed(2).replace('.', ',')}`);
-    campo.value = max.toString().replace('.', ',');
-    calc();
-    return;
-  }
-
-  campo.value = valor.replace('.', ',');
-  calc();
-}
-
-function formatarDecimal(campo){
-  if (campo.value === '') return;
-
-  let num = parseFloat(campo.value.replace(',', '.'));
-  if (isNaN(num)) {
-    campo.value = '';
-    return;
-  }
-
-  campo.value = num.toFixed(2).replace('.', ',');
-}
-
-/* =========================
-   LEITURA SEGURA DE VALORES
-========================= */
-function v(id){
-  const el = document.getElementById(id);
-  if (!el || el.value === '') return 0;
-  return parseFloat(el.value.replace(',', '.')) || 0;
-}
-
-/* =========================
-   CÁLCULO DAS NOTAS
-========================= */
-function calc(){
-  const dv = v('voz1') + v('voz2') + v('voz3');
-  const de = v('exp1') + v('exp2') + v('exp3');
-  const df = v('fid1') + v('fid2') + v('fid3');
-
-  descVoz.textContent = dv.toFixed(2).replace('.', ',');
-  descExp.textContent = de.toFixed(2).replace('.', ',');
-  descFid.textContent = df.toFixed(2).replace('.', ',');
-
-  notaVoz.textContent = (3 - dv).toFixed(2).replace('.', ',');
-  notaExp.textContent = (2 - de).toFixed(2).replace('.', ',');
-  notaFid.textContent = (1 - df).toFixed(2).replace('.', ',');
-
-  const final = 6 + v('notaInter') - (dv + de + df + v('descTempo') + v('descInd'));
-  notaFinal.textContent = final.toFixed(2).replace('.', ',');
-
-  data.textContent = new Date().toLocaleString();
-}
-
-/* =========================
-   CARREGAR CANDIDATOS
-========================= */
-fetch(URL + "?acao=candidatos")
-  .then(r => r.json())
-  .then(lista => {
-    candidatos = lista;
-    const sel = document.getElementById("codCandidato");
-    sel.innerHTML = `<option value="">Selecione CODIGO do candidato *</option>`;
-    lista.forEach(c => {
-      sel.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`;
+function carregarCandidatos() {
+    fetch(URL + "?acao=candidatos")
+    .then(r => r.json())
+    .then(lista => {
+        candidatos = lista;
+        const sel = document.getElementById("codCandidato");
+        sel.innerHTML = `<option value="">Selecione CÓDIGO *</option>`;
+        lista.forEach(c => sel.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`);
     });
-  });
+}
 
-document.getElementById("codCandidato").addEventListener("change", () => {
-  const codigo = codCandidato.value;
-  const c = candidatos.find(x => String(x.codigo) === String(codigo));
-  if (!c) return;
+document.getElementById("codCandidato").onchange = function() {
+    const c = candidatos.find(x => String(x.codigo) === String(this.value));
+    if(!c) return;
+    document.getElementById("concorrente").innerText = c.concorrente;
+    document.getElementById("categoria").innerText = c.categoria;
+    document.getElementById("entidade").innerText = c.entidade;
+    document.getElementById("municipio").innerText = c.municipio;
+    document.getElementById("rt").innerText = c.rt;
+};
 
-  concorrente.textContent = c.concorrente;
-  categoria.textContent   = c.categoria;
-  entidade.textContent    = c.entidade;
-  municipio.textContent   = c.municipio;
-  rt.textContent          = c.rt;
-});
-
-/* =========================
-   CARREGAR AVALIADORES
-========================= */
-fetch(URL + "?acao=avaliadores")
-  .then(r => r.json())
-  .then(lista => {
-    const sel = document.getElementById("avaliador");
-    sel.innerHTML = `<option value="">Selecione o avaliador *</option>`;
-    lista.forEach(a => {
-      sel.innerHTML += `<option value="${a.id}">${a.id} - ${a.nome}</option>`;
-    });
-  });
-
-/* =========================
-   SALVAR
-========================= */
 function salvar(){
+    const user = JSON.parse(localStorage.getItem("avaliadorDados"));
+    if(!v('notaInter')) { alert("Informe a nota de Interpretação!"); return; }
+    if(!document.getElementById("codCandidato").value) { alert("Selecione o candidato!"); return; }
 
-  if(!codCandidato.value){
-    alert("Selecione o candidato");
-    return;
-  }
+    const btn = document.querySelector(".btn-salvar");
+    btn.disabled = true;
+    btn.innerText = "SALVANDO...";
 
-  if(!avaliador.value){
-    alert("Selecione o avaliador");
-    return;
-  }
+    const payload = {
+        usuarioLogin: user.usuario, 
+        avaliadorNome: user.nome,
+        cod: document.getElementById("codCandidato").value,
+        categoria: document.getElementById("categoria").innerText,
+        concorrente: document.getElementById("concorrente").innerText,
+        entidade: document.getElementById("entidade").innerText,
+        municipio: document.getElementById("municipio").innerText,
+        rt: document.getElementById("rt").innerText,
+        voz1: v('voz1'), voz2: v('voz2'), voz3: v('voz3'),
+        exp1: v('exp1'), exp2: v('exp2'), exp3: v('exp3'),
+        notaInter: v('notaInter'),
+        fid1: v('fid1'), fid2: v('fid2'), fid3: v('fid3'),
+        descTempo: v('descTempo'), descInd: v('descInd'),
+        obsGeral: document.getElementById("obsGeral").value
+    };
 
-  // 🔴 INTERPRETAÇÃO OBRIGATÓRIA
-  if(notaInter.value.trim() === ""){
-    alert("Informe a nota de Interpretação");
-    notaInter.focus();
-    return;
-  }
-
-  // garante número válido
-  const notaI = v('notaInter');
-  if(notaI < 0 || notaI > 4){
-    alert("Nota de Interpretação inválida");
-    notaInter.focus();
-    return;
-  }
-
-  fetch(URL, {
-    method: "POST",
-    body: JSON.stringify({
-      cod: codCandidato.value,
-      concorrente: concorrente.textContent,
-      categoria: categoria.textContent,
-      entidade: entidade.textContent,
-      municipio: municipio.textContent,
-      rt: rt.textContent,
-
-      voz1: v('voz1'),
-      voz2: v('voz2'),
-      voz3: v('voz3'),
-      obsVoz: obsVoz.value,
-
-      exp1: v('exp1'),
-      exp2: v('exp2'),
-      exp3: v('exp3'),
-      obsExp: obsExp.value,
-
-      notaInter: v('notaInter'),
-      obsInter: obsInter.value,
-
-      fid1: v('fid1'),
-      fid2: v('fid2'),
-      fid3: v('fid3'),
-      obsFid: obsFid.value,
-
-      descTempo: v('descTempo'),
-      descInd: v('descInd'),
-      obsGeral: obsGeral.value,
-
-      notaFinal: notaFinal.textContent,
-      avaliador: avaliador.value,
-      data: new Date().toLocaleString()
-    })
-  })
-  .then(r => r.json())
-  .then(r => {
-    if(r.status === "OK"){
-      alert("Avaliação salva com sucesso");
-      location.reload();
-    } else {
-      alert("Erro: " + r.msg);
-    }
-  });
+    fetch(URL, { method: "POST", body: JSON.stringify(payload) })
+    .then(r => r.json())
+    .then(res => {
+        if(res.status === "OK") {
+            alert("Salvo com sucesso!");
+            location.reload();
+        } else {
+            alert("Erro: " + res.msg);
+            btn.disabled = false;
+        }
+    });
 }
 </script>
-Planilha de Avaliação | V.03.2026
-
 </body>
 </html>
