@@ -285,7 +285,7 @@ function carregarCandidatos() {
     .then(lista => {
         candidatos = lista;
         const sel = document.getElementById("codCandidato");
-        sel.innerHTML = `<option value="">Selecione CÓDIGO *</option>`;
+        sel.innerHTML = `<option value="">Selecione CÓDIGO do candidato *</option>`;
         lista.forEach(c => sel.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`);
     });
 }
@@ -339,6 +339,7 @@ function salvar(){
 </script>
 </body>
 </html>
+
 
 
 
