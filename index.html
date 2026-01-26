@@ -108,11 +108,11 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
     <div class="box">
         <h3>Fundamento da Voz (3,00)</h3>
         <h3>(Descontos)</h3>
-        <div class="linha-nota"><span>Imposição (0,5)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Imposição (0,50)</span><span class="pontilhado"></span>
             <input id="voz1" class="input-nota" oninput="limitarDecimal(this, 0.5)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
-        <div class="linha-nota"><span>Dicção (0,5)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Dicção (0,50)</span><span class="pontilhado"></span>
             <input id="voz2" class="input-nota" oninput="limitarDecimal(this, 0.5)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
-        <div class="linha-nota"><span>Inflexão (0,5)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Inflexão (0,50)</span><span class="pontilhado"></span>
             <input id="voz3" class="input-nota" oninput="limitarDecimal(this, 0.5)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
         <div class="resumo-direita"><span>DESC: <b id="descVoz">0,00</b></span><span>Nota: <b id="notaVoz">3,00</b></span></div>
         <textarea id="obsVoz" placeholder="Observações Voz"></textarea>
@@ -121,27 +121,28 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
     <div class="box">
         <h3>Expressão Corporal (2,00)</h3>
         <h3>(Descontos)</h3>
-        <div class="linha-nota"><span>Facial (0,3)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Facial (0,30)</span><span class="pontilhado"></span>
             <input id="exp1" class="input-nota" oninput="limitarDecimal(this, 0.3)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
-        <div class="linha-nota"><span>Gestual (0,3)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Gestual (0,30)</span><span class="pontilhado"></span>
             <input id="exp2" class="input-nota" oninput="limitarDecimal(this, 0.3)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
-        <div class="linha-nota"><span>Postura (0,4)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Postura (0,40)</span><span class="pontilhado"></span>
             <input id="exp3" class="input-nota" oninput="limitarDecimal(this, 0.4)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
         <div class="resumo-direita"><span>DESC: <b id="descExp">0,00</b></span><span>Nota: <b id="notaExp">2,00</b></span></div>
         <textarea id="obsExp" placeholder="Observações Expressão"></textarea>
     </div>
 
     <div class="box">
-        <h3>Interpretação (4,00)</h3>
-        <h3>(Acréscimo)</h3>
-        <div class="texto-interp">
-(interação com o texto, transmissão da mensagem, comunicação, dinâmica, pontuação / acentuação)<br>
--Excelente: (3,60 à 4,00)<br>
--Bom: (3,10 à 3,50)<br>
--Regular: (2,60 à 3,00)<br>
--Suficiente: (2,10 à 2,50)<br>
--Não terminou, etc.: (0 à 2,00)<br>
-</div>
+    <h3>Interpretação (4,00)</h3>
+    <h3>(Acréscimo)</h3>
+    <div class="texto-interp">
+    (interação com o texto, transmissão da mensagem, comunicação, dinâmica, pontuação / acentuação)<br>
+    -Excelente: (3,60 à 4,00)<br>
+    -Bom: (3,10 à 3,50)<br>
+    -Regular: (2,60 à 3,00)<br>
+    -Suficiente: (2,10 à 2,50)<br>
+    -Não terminou, etc.: (0 à 2,00))
+    </div>
+    <br>
         <div class="linha-nota" style="margin-top:10px;"><span class="texto">Nota</span><span class="pontilhado"></span>
             <input id="notaInter" class="input-nota" oninput="limitarDecimal(this, 4.0)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
         <textarea id="obsInter" placeholder="Observações Interpretação"></textarea>
@@ -150,11 +151,11 @@ button{padding:10px 30px;font-size:16px;font-weight:bold; cursor:pointer}
     <div class="box">
         <h3>Fidelidade ao Texto (1,00)</h3>
         <h3>(Descontos)</h3>
-        <div class="linha-nota"><span>Letra (0,2)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Letra (0,20)</span><span class="pontilhado"></span>
             <input id="fid1" class="input-nota" oninput="limitarDecimal(this, 0.2)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
-        <div class="linha-nota"><span>Verso (0,4)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Verso (0,40)</span><span class="pontilhado"></span>
             <input id="fid2" class="input-nota" oninput="limitarDecimal(this, 0.4)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
-        <div class="linha-nota"><span>Esqueceu (0,4)</span><span class="pontilhado"></span>
+        <div class="linha-nota"><span>Esqueceu (0,40)</span><span class="pontilhado"></span>
             <input id="fid3" class="input-nota" oninput="limitarDecimal(this, 0.4)" onblur="formatarDecimal(this)" placeholder="0,00"></div>
         <div class="resumo-direita"><span>DESC: <b id="descFid">0,00</b></span><span>Nota: <b id="notaFid">1,00</b></span></div>
         <textarea id="obsFid" placeholder="Observações Fidelidade"></textarea>
@@ -338,3 +339,4 @@ function salvar(){
 </script>
 </body>
 </html>
+
