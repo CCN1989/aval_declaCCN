@@ -199,7 +199,6 @@ function logout(){
   location.reload();
 }
 
-<script>
 function salvar(){
 
   if(!localStorage.getItem("tokenAvaliador")){
@@ -256,21 +255,19 @@ function salvar(){
     }
   });
 }
+if(localStorage.getItem("tokenAvaliador")) liberarSistema();
+  
 <button onclick="logout()">Sair</button>
-
-<script>
+  
 function logout(){
   localStorage.clear();
   location.reload();
 }
-</script>
-
-</script>
 
 
-if(localStorage.getItem("tokenAvaliador")) liberarSistema();
 </script>
 
 </body>
 </html>
+
 
