@@ -127,6 +127,36 @@ input[type=number] {
 </head>
 
 <body>
+<!-- LOGIN -->
+<div id="loginBox" style="
+  position:fixed;
+  inset:0;
+  background:#9c8a8a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+">
+  <div style="
+    background:#ffe066;
+    border:3px solid #000;
+    padding:25px;
+    width:360px;
+    text-align:center;
+  ">
+    <h2>Acesso do Avaliador</h2>
+
+    <input id="usuario" placeholder="Usuário" style="width:100%;padding:8px"><br><br>
+    <input id="senha" type="password" placeholder="Senha" style="width:100%;padding:8px"><br><br>
+
+    <button onclick="fazerLogin()" style="width:100%;background:#fc7a00;border:2px solid #000">
+      Entrar
+    </button>
+
+    <div id="erroLogin" style="color:red;margin-top:10px"></div>
+  </div>
+</div>
+ 
 <div class="container">
 
 <!-- CABEÇALHO -->
@@ -381,7 +411,7 @@ Nota Final<br>
 </div>
 
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbw0Tq-aEqsIhi-ejtsMl3nCI103uH7JmGLYR2wkBFz0iq37BgxtQ1NDqGtiTAp8au47/exec";
+const URL = "https://script.google.com/macros/s/AKfycbwBz0hhv9OPlBmkq7SpfsaZzK8IvUZAWFJGpAlrYyF7cfpqZZNYDgGjv6N2XHh0HN1f/exec";
 
 let candidatos = [];
 
@@ -524,8 +554,10 @@ function salvar(){
   }
 
   fetch(URL, {
-    method: "POST",
-    body: JSON.stringify({
+  method: "POST",
+  body: JSON.stringify({
+    token: localStorage.getItem("tokenAvaliador"),
+    avaliador: localStorage.getItem("nomeAvaliador"),
       cod: codCandidato.value,
       concorrente: concorrente.textContent,
       categoria: categoria.textContent,
@@ -570,8 +602,62 @@ function salvar(){
     }
   });
 }
+
+/* =========================
+   LOGIN E SESSÃO
+========================= */
+
+function fazerLogin(){
+  const usuario = document.getElementById("usuario").value.trim();
+  const senha   = document.getElementById("senha").value.trim();
+
+  if(!usuario || !senha){
+    erroLogin.textContent = "Informe usuário e senha";
+    return;
+  }
+
+  fetch(URL, {
+    method:"POST",
+    body:JSON.stringify({
+      acao:"login",
+      usuario,
+      senha
+    })
+  })
+  .then(r => r.json())
+  .then(r => {
+    if(r.status === "OK"){
+      localStorage.setItem("tokenAvaliador", r.token);
+      localStorage.setItem("nomeAvaliador", r.nome);
+
+      liberarSistema(r.nome);
+    } else {
+      erroLogin.textContent = r.msg || "Erro no login";
+    }
+  })
+  .catch(() => erroLogin.textContent = "Erro de conexão");
+}
+
+function liberarSistema(nome){
+  document.getElementById("loginBox").style.display = "none";
+
+  // Preenche avaliador automaticamente
+  const sel = document.getElementById("avaliador");
+  sel.innerHTML = `<option value="${nome}">${nome}</option>`;
+  sel.value = nome;
+  sel.disabled = true;
+}
+
+/* =========================
+   AUTOLOGIN
+========================= */
+if(localStorage.getItem("tokenAvaliador") && localStorage.getItem("nomeAvaliador")){
+  liberarSistema(localStorage.getItem("nomeAvaliador"));
+}  
+  
 </script>
 Planilha de Avaliação | V.03.2026
 
 </body>
 </html>
+
